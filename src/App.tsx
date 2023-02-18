@@ -12,7 +12,7 @@ import light from "./themes/light";
 
 const App = () => {
   return (
-    <ThemeProvider theme={light}>
+    <ThemeProvider theme={dark}>
       <CssBaseline />
       <TopBar/>
       <Container fixed>
