@@ -10,7 +10,10 @@ import TopBar from "./components/TopBar";
 import dark from "./themes/dark";
 import light from "./themes/light";
 
+import axios from "./setup/axios";
+
 const App = () => {
+  axios.get("user").then(response => console.log(response))
   return (
     <ThemeProvider theme={dark}>
       <CssBaseline />
