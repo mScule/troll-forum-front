@@ -11,7 +11,7 @@ const Search: FC<Props> = ({ handleSearch }) => {
     <TextField
       placeholder="Search"
       variant="outlined"
-      sx={{ width: "100%", maxWidth: "50rem"}}
+      sx={{ width: "100%", maxWidth: "30rem"}}
       size="small"
       InputProps={{
         startAdornment: (
