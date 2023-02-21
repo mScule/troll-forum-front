@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { RouterProvider } from "react-router-dom";
 import router from "./router";
 
@@ -11,14 +12,20 @@ import dark from "./themes/dark";
 import light from "./themes/light";
 
 import axios from "./setup/axios";
+import Sidebar from "./components/Sidebar";
 
 const App = () => {
-  axios.get("user").then(response => console.log(response))
+  const [showSideBar, setShowSideBar] = useState(false);
+
   return (
     <ThemeProvider theme={dark}>
       <CssBaseline />
-      <TopBar/>
-      <Container fixed>
+      <TopBar handleMenuButtonClick={() => setShowSideBar(!showSideBar)} />
+      <Sidebar
+        open={showSideBar}
+        handleCloseSidebar={() => setShowSideBar(!showSideBar)}
+      />
+      <Container fixed sx={{ marginTop: 8 }}>
         <RouterProvider router={router} />
       </Container>
     </ThemeProvider>

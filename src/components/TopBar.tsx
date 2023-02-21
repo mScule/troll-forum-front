@@ -1,16 +1,19 @@
+import { FC, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import IconButton from "@mui/material/IconButton";
-import Switch from "@mui/material/Switch";
 import Logo from "./Logo";
 import Search from "./Search";
-import { TbUser as UserIcon } from "react-icons/tb";
-import { TbSun as LightMode } from "react-icons/tb";
+import { TbMenu2 as UserIcon } from "react-icons/tb";
 
 import { centerContent } from "../styles";
 
-const TopBar = () => {
+interface Props {
+  handleMenuButtonClick: () => void;
+}
+
+const TopBar: FC<Props> = ({ handleMenuButtonClick }) => {
   return (
     <AppBar position="sticky">
       <Stack
@@ -25,7 +28,11 @@ const TopBar = () => {
       >
         <Logo />
         <Search />
-        <IconButton sx={{ border: "solid", margin: 1 }} size="small">
+        <IconButton
+          sx={{ border: "solid", margin: 1 }}
+          size="small"
+          onClick={handleMenuButtonClick}
+        >
           <UserIcon />
         </IconButton>
       </Stack>
