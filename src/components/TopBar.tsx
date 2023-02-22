@@ -27,7 +27,6 @@ const TopBar: FC<Props> = ({ handleMenuButtonClick }) => {
         sx={centerContent}
       >
         <Logo />
-        <Search />
         <IconButton
           sx={{ border: "solid", margin: 1 }}
           size="small"

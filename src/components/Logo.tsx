@@ -10,13 +10,7 @@ export default function Logo() {
       <Stack padding={1} sx={rotateChildren(45)}>
         <AppIcon size={32} color={red[500]} />
       </Stack>
-      <Typography
-        noWrap
-        variant={"h1"}
-        fontSize={20}
-        sx={hide.mobile}
-        fontWeight="bold"
-      >
+      <Typography noWrap variant={"h1"} fontSize={20} fontWeight="bold">
         Trolf
       </Typography>
     </Stack>

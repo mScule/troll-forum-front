@@ -6,22 +6,25 @@ import {
   List,
   ListItem,
   IconButton,
+  ListItemButton,
   SxProps,
+  Typography,
+  Switch,
 } from "@mui/material";
-import { Link } from "@mui/material";
-import { TbX as CloseIcon } from "react-icons/tb";
+import {
+  TbX as CloseIcon,
+  TbUserPlus as RegisterIcon,
+  TbLockOpen as LoginIcon,
+  TbMoon as DarkThemeIcon,
+  TbSun as LightThemeIcon,
+} from "react-icons/tb";
+import Logo from "./Logo";
 import { hide } from "../styles";
 
 interface Props {
   open: boolean;
   handleCloseSidebar: () => void;
 }
-
-const contentToRight: SxProps = {
-  display: "flex",
-  flexDirection: "row",
-  justifyContent: "right",
-};
 
 const Sidebar: FC<Props> = ({ open, handleCloseSidebar }) => (
   <Drawer
@@ -31,8 +34,17 @@ const Sidebar: FC<Props> = ({ open, handleCloseSidebar }) => (
     onClose={handleCloseSidebar}
   >
     <Box sx={hide.desktop}>
-      <List>
-        <ListItem sx={contentToRight}>
+      <List disablePadding>
+        <ListItem
+          disableGutters
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            padding: 1,
+          }}
+        >
+          <Logo />
           <IconButton onClick={handleCloseSidebar}>
             <CloseIcon />
           </IconButton>
@@ -41,11 +53,35 @@ const Sidebar: FC<Props> = ({ open, handleCloseSidebar }) => (
       <Divider />
     </Box>
     <List>
-      <ListItem sx={contentToRight}>
-        <Link href="login">Login</Link>
+      <ListItem>
+        <Typography variant="h2" fontSize={20}>
+          Login / Register
+        </Typography>
       </ListItem>
-      <ListItem sx={contentToRight}>
-        <Link href="register">Register</Link>
+      <ListItem disablePadding>
+        <ListItemButton sx={{ gap: "1rem" }}>
+          <LoginIcon />
+          Login
+        </ListItemButton>
+      </ListItem>
+      <ListItem disablePadding>
+        <ListItemButton sx={{ gap: "1rem" }}>
+          <RegisterIcon />
+          Register
+        </ListItemButton>
+      </ListItem>
+    </List>
+    <Divider />
+    <List>
+      <ListItem>
+        <Typography variant="h2" fontSize={20}>
+          Theme
+        </Typography>
+      </ListItem>
+      <ListItem>
+        <DarkThemeIcon />
+        <Switch />
+        <LightThemeIcon />
       </ListItem>
     </List>
   </Drawer>
