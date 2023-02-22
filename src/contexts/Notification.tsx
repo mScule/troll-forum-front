@@ -14,7 +14,7 @@ interface Notification {
   type: "info" | "success" | "warning" | "error";
 }
 
-const NotificationProvider: FC<Props> = ({ children }) => {
+export const NotificationProvider: FC<Props> = ({ children }) => {
   const [show, setShow] = useState<boolean>(false);
   const content = useRef<Notification>({
     type: "info",
@@ -59,4 +59,4 @@ const NotificationProvider: FC<Props> = ({ children }) => {
   );
 };
 
-export default NotificationProvider;
+export default NotificationContext;

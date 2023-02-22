@@ -13,15 +13,18 @@ import {
 import {
   TbX as CloseIcon,
   TbUserPlus as RegisterIcon,
-  TbLockOpen as LoginIcon,
+  TbLogin as LoginIcon,
   TbMoon as DarkThemeIcon,
   TbSun as LightThemeIcon,
+  TbUser as UserIcon,
+  TbLogout as LogoutIcon,
 } from "react-icons/tb";
 import Logo from "./Logo";
 import { hide } from "../styles";
 import ThemeSelectorContext from "../contexts/ThemeSelector";
 import light from "../themes/light";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../contexts/User";
 
 interface Props {
   open: boolean;
@@ -30,6 +33,8 @@ interface Props {
 
 const Sidebar: FC<Props> = ({ open, handleCloseSidebar }) => {
   const { theme, setTheme } = useContext(ThemeSelectorContext);
+  const user = useContext(UserContext);
+
   const navigate = useNavigate();
 
   return (
@@ -67,31 +72,61 @@ const Sidebar: FC<Props> = ({ open, handleCloseSidebar }) => {
           </ListItem>
         </List>
       </Box>
-      <List>
-        <ListItem>
-          <Typography variant="h3" fontSize={15}>
-            Login / Register
-          </Typography>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton
-            sx={{ gap: "1rem" }}
-            onClick={() => navigate("/login")}
-          >
-            <LoginIcon />
-            Login
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton
-            sx={{ gap: "1rem" }}
-            onClick={() => navigate("/register")}
-          >
-            <RegisterIcon />
-            Register
-          </ListItemButton>
-        </ListItem>
-      </List>
+      {user.isLoggedIn ? (
+        <List>
+          <ListItem>
+            <Typography variant="h3" fontSize={15}>
+              User
+            </Typography>
+          </ListItem>
+          <ListItem>
+            <ListItemButton sx={{ gap: "1rem" }}>
+              <UserIcon />
+              User page
+            </ListItemButton>
+          </ListItem>
+          <ListItem>
+            <ListItemButton
+              sx={{ gap: "1rem" }}
+              onClick={() => {
+                localStorage.removeItem("authorization");
+                user.setId(0);
+                user.setIsLoggedIn(false);
+              }}
+            >
+              <LogoutIcon />
+              Logout
+            </ListItemButton>
+          </ListItem>
+        </List>
+      ) : (
+        <List>
+          <ListItem>
+            <Typography variant="h3" fontSize={15}>
+              Login / Register
+            </Typography>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton
+              sx={{ gap: "1rem" }}
+              onClick={() => navigate("/login")}
+            >
+              <LoginIcon />
+              Login
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton
+              sx={{ gap: "1rem" }}
+              onClick={() => navigate("/register")}
+            >
+              <RegisterIcon />
+              Register
+            </ListItemButton>
+          </ListItem>
+        </List>
+      )}
+
       <Divider />
       <List>
         <ListItem>
