@@ -10,6 +10,7 @@ export default function Register() {
 
   const schema: FormSchema = {
     username: {
+      type: "text",
       rows: 1,
       validatePending: async (value: string) => {
         if (value.length < 3) {
@@ -34,6 +35,7 @@ export default function Register() {
           : "Username has to be 3 characters or longer",
     },
     password: {
+      type: "password",
       rows: 1,
       validate: (value) => (value.length >= 12 ? "success" : "failure"),
       errorText: "Password has to be 12 characters or longer",
@@ -47,10 +49,24 @@ export default function Register() {
         formSchema={schema}
         submitLabel="Register"
         handleSubmit={async (form) => {
-          createNotification({
-            type: "info",
-            content: `User created with username ${form.username}`,
-          });
+          try {
+            const { username } = (
+              await axios.post("user", {
+                username: form.username,
+                password: form.password,
+              })
+            ).data.user;
+
+            createNotification({
+              type: "success",
+              content: `User ${username} created successfully!`
+            });
+          } catch {
+            createNotification({
+              type: "error",
+              content: "Error was encountered while creating new user.",
+            });
+          }
         }}
       />
     </PageWrapper>

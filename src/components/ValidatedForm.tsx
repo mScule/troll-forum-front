@@ -15,8 +15,9 @@ export type Validator = (value: string) => ValidatorResult;
 export type PendingValidator = (value: string) => Promise<ValidatorResult>;
 
 export interface FormSchemaField {
-  rows: number;
-  errorText: ((value: string) => string) | string;
+  rows?: number;
+  type: "text" | "password";
+  errorText?: ((value: string) => string) | string;
   validate?: Validator;
   validatePending?: PendingValidator;
 }
@@ -79,7 +80,9 @@ const ValidatedForm: FC<Props> = ({
   };
 
   const onValidation = (key: string): null | TextFieldProps => {
-    let errorText = formSchema[key].errorText;
+    let errorText = formSchema[key].errorText
+      ? formSchema[key].errorText
+      : "Invalid input value";
 
     switch (form[key].validation) {
       case "success":
@@ -173,12 +176,13 @@ const ValidatedForm: FC<Props> = ({
               id={fieldName}
               name={fieldName}
               label={capitalize(fieldName)}
+              type={schema.type}
               placeholder={capitalize(fieldName)}
               value={form[fieldName].value}
               onChange={(event) => setValue(fieldName, event.target.value)}
               required
               fullWidth
-              {...(schema.rows > 1 ? multilineFieldProps(schema.rows) : null)}
+              {...(schema.rows && schema.rows > 1 ? multilineFieldProps(schema.rows) : null )}
               {...onValidation(fieldName)}
             />
           );
