@@ -10,6 +10,7 @@ import Container from "@mui/material/Container";
 import { useState } from "react";
 import axios from "axios";
 import FormWrapper from "../components/FormWrapper";
+import PageWrapper from "../components/PageWrapper";
 
 export default function Register() {
   const [username, setUsername] = useState("");
@@ -35,42 +36,44 @@ export default function Register() {
   };
 
   return (
-    <FormWrapper>
-      <Typography component="h1" variant="h5">
-        Register
-      </Typography>
-      <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          id="username"
-          label="Username"
-          name="username"
-          autoComplete="username"
-          autoFocus
-          onChange={(event) => setUsername(event.target.value)}
-        />
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          name="password"
-          label="Password"
-          type="password"
-          id="password"
-          autoComplete="current-password"
-          onChange={(event) => setPassword(event.target.value)}
-        />
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          sx={{ mt: 3, mb: 2 }}
-        >
+    <PageWrapper>
+      <FormWrapper>
+        <Typography component="h1" variant="h5">
           Register
-        </Button>
-      </Box>
-    </FormWrapper>
+        </Typography>
+        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="username"
+            label="Username"
+            name="username"
+            autoComplete="username"
+            autoFocus
+            onChange={(event) => setUsername(event.target.value)}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            onChange={(event) => setPassword(event.target.value)}
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Register
+          </Button>
+        </Box>
+      </FormWrapper>
+    </PageWrapper>
   );
 }

@@ -1,5 +1,10 @@
+import PageWrapper from "../components/PageWrapper";
 import UserProfile from "../components/UserProfile";
 
 export default function Profile() {
-    return <UserProfile/>
+  return (
+    <PageWrapper>
+      <UserProfile />
+    </PageWrapper>
+  );
 }

@@ -7,7 +7,6 @@ import {
   ListItem,
   IconButton,
   ListItemButton,
-  SxProps,
   Typography,
   Switch,
 } from "@mui/material";
@@ -22,6 +21,7 @@ import Logo from "./Logo";
 import { hide } from "../styles";
 import ThemeSelectorContext from "../contexts/ThemeSelector";
 import light from "../themes/light";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   open: boolean;
@@ -30,6 +30,7 @@ interface Props {
 
 const Sidebar: FC<Props> = ({ open, handleCloseSidebar }) => {
   const { theme, setTheme } = useContext(ThemeSelectorContext);
+  const navigate = useNavigate();
 
   return (
     <Drawer
@@ -57,20 +58,35 @@ const Sidebar: FC<Props> = ({ open, handleCloseSidebar }) => {
         </List>
         <Divider />
       </Box>
+      <Box sx={hide.mobile}>
+        <List>
+          <ListItem>
+            <Typography variant="h2" fontSize={20}>
+              Menu
+            </Typography>
+          </ListItem>
+        </List>
+      </Box>
       <List>
         <ListItem>
-          <Typography variant="h2" fontSize={20}>
+          <Typography variant="h3" fontSize={15}>
             Login / Register
           </Typography>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton sx={{ gap: "1rem" }}>
+          <ListItemButton
+            sx={{ gap: "1rem" }}
+            onClick={() => navigate("/login")}
+          >
             <LoginIcon />
             Login
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton sx={{ gap: "1rem" }}>
+          <ListItemButton
+            sx={{ gap: "1rem" }}
+            onClick={() => navigate("/register")}
+          >
             <RegisterIcon />
             Register
           </ListItemButton>
@@ -79,7 +95,7 @@ const Sidebar: FC<Props> = ({ open, handleCloseSidebar }) => {
       <Divider />
       <List>
         <ListItem>
-          <Typography variant="h2" fontSize={20}>
+          <Typography variant="h3" fontSize={15}>
             Theme
           </Typography>
         </ListItem>
