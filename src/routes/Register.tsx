@@ -1,57 +1,57 @@
-import { useState } from "react";
-
 import axios from "../setup/axios";
-
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import { TextFieldProps } from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import CircularProgress from "@mui/material/CircularProgress";
-
-import FormWrapper from "../components/FormWrapper";
 import PageWrapper from "../components/PageWrapper";
-import { Stack } from "@mui/system";
-
-import { TbX as ValidationFailureIcon } from "react-icons/tb";
-import { TbCheck as ValidationSuccessIcon } from "react-icons/tb";
-import ValidatedForm, { ValidatorResult } from "../components/ValidatedForm";
-
-type ValidationStatus =
-  | "is-validated"
-  | "is-not-validated"
-  | "pending"
-  | "not-filled";
-
-interface FormField {
-  value: string;
-  validation: ValidationStatus;
-}
-
+import ValidatedForm from "../components/ValidatedForm";
+import { FormSchema } from "../components/ValidatedForm";
 
 export default function Register() {
+  const schema: FormSchema = {
+    username: {
+      rows: 1,
+      validatePending: async (value: string) => {
+        if (value.length < 3) {
+          return "failure";
+        }
+
+        await new Promise(resolve => setTimeout(resolve, 2000))
+        const search = await axios.get("search", { params: { value } });
+        const users = search.data.users;
+
+        for (const user of users) {
+          if (value === user.username) {
+            return "failure";
+          }
+        }
+
+        return "success";
+      },
+      errorText: (value) =>
+        value.length >= 3
+          ? `There's already user with name ${value}`
+          : "Username has to be 3 characters or longer",
+    },
+    test: {
+      rows:2,
+      validatePending: async (value) => {
+        await new Promise(resolve => setTimeout(resolve, 4000))
+        return "failure"
+      },
+      errorText: "error"
+    },
+    password: {
+      rows: 1,
+      validate: (value) => (value.length >= 12 ? "success" : "failure"),
+      errorText: "Password has to be 12 characters or longer",
+    },
+  };
+
   return (
     <PageWrapper>
       <ValidatedForm
         formName="Registeration"
-        formSchema={{
-          username: {
-            rows: 1,
-            errorText: (value) => `There's already user with name ${value}`,
-            validatePending: async (value: string) => {
-              await new Promise(resolve => setTimeout(resolve, 1000))
-              return "success";
-            },
-          },
-          password: {
-            rows: 1,
-            errorText: "Password has to be 12 characters or longer",
-            validate: (_value) => "failure",
-          },
-        }}
+        formSchema={schema}
         submitLabel="Register"
         handleSubmit={async (form) => {
-          console.log(form);
+          console.log("USER:", form);
         }}
       />
     </PageWrapper>

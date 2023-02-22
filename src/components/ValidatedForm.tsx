@@ -21,16 +21,16 @@ export interface FormSchemaField {
   validatePending?: PendingValidator;
 }
 
+export type FormSchema = Record<string, FormSchemaField>;
+
 interface Props {
   formName: string;
-  formSchema: Record<string, FormSchemaField>;
+  formSchema: FormSchema;
   handleSubmit: (form: Record<string, string>) => Promise<void>;
   submitLabel: string;
 }
 
-const initForm = (
-  formSchema: Record<string, FormSchemaField>
-): Record<string, FormField> => {
+const initForm = (formSchema: FormSchema): Record<string, FormField> => {
   const form: Record<string, FormField> = {};
   Object.keys(formSchema).forEach(
     (field: string) => (form[field] = { value: "", validation: "empty" })
@@ -55,7 +55,11 @@ const ValidatedForm: FC<Props> = ({
 
   const submit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log();
+    const finishedForm: Record<string, string> = {};
+    for (const [key, field] of Object.entries(form)) {
+      finishedForm[key] = field.value;
+    }
+    handleSubmit(finishedForm);
   };
 
   const isFormValidated = () => {
@@ -101,22 +105,22 @@ const ValidatedForm: FC<Props> = ({
   const capitalize = (value: string) =>
     value[0].toUpperCase() + value.substring(1);
 
-  const validate = async (form: Record<string, FormField>) => {
+  const validate = async (key: string, form: Record<string, FormField>) => {
     const updatedForm = { ...form };
     let containsPendingValidators = false;
 
-    for (const name of Object.keys(form)) {
-      const pendingValidator = formSchema[name].validatePending;
-      const validator = formSchema[name].validate;
+    const pendingValidator = formSchema[key].validatePending;
+    const validator = formSchema[key].validate;
 
-      if (validator) {
-        updatedForm[name].validation = validator(updatedForm[name].value);
-      } else if (pendingValidator) {
-        updatedForm[name].validation = "pending";
-        containsPendingValidators = true;
-      } else {
-        updatedForm[name].validation = "success";
-      }
+    if (updatedForm[key].value === "") {
+      updatedForm[key].validation = "empty";
+    } else if (validator) {
+      updatedForm[key].validation = validator(updatedForm[key].value);
+    } else if (pendingValidator) {
+      updatedForm[key].validation = "pending";
+      containsPendingValidators = true;
+    } else {
+      updatedForm[key].validation = "success";
     }
 
     setForm(updatedForm);
@@ -130,7 +134,10 @@ const ValidatedForm: FC<Props> = ({
     for (const name of Object.keys(form)) {
       const pendingValidator = formSchema[name].validatePending;
 
-      if (pendingValidator) {
+      if (
+        pendingValidator &&
+        awaitedUpdatedForm[name].validation === "pending"
+      ) {
         updatedForm[name].validation = await pendingValidator(
           updatedForm[name].value
         );
@@ -146,7 +153,7 @@ const ValidatedForm: FC<Props> = ({
     updatedForm[key].value = value;
 
     setForm(updatedForm);
-    validate(updatedForm);
+    validate(key, updatedForm);
   };
 
   return (
@@ -172,16 +179,15 @@ const ValidatedForm: FC<Props> = ({
             />
           );
         })}
+        <Button
+          type="submit"
+          variant="contained"
+          sx={{ marginTop: 3, marginBottom: 3 }}
+          disabled={!isFormValidated()}
+        >
+          {submitLabel}
+        </Button>
       </Stack>
-
-      <Button
-        type="submit"
-        variant="contained"
-        sx={{ marginTop: 3, marginBottom: 3 }}
-        disabled={!isFormValidated()}
-      >
-        {submitLabel}
-      </Button>
     </FormWrapper>
   );
 };
