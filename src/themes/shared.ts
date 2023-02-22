@@ -32,6 +32,13 @@ const shared: ThemeOptions = {
             main: red[500],
             dark: red[500],
         },
+    },
+    components: {
+        MuiButtonBase: {
+            defaultProps: {
+                disableRipple: true,
+            }
+        },
     }
 }
 

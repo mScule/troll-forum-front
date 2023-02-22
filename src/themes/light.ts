@@ -3,25 +3,27 @@ import { createTheme } from "@mui/material/styles";
 import shared from "./shared";
 
 const light = createTheme({
+  ...shared,
   ...shared.breakpoints,
   palette: {
     mode: "light",
     ...shared.palette,
-    primary: {
-      light: grey[50],
-      main: grey[100],
-      dark: grey[200],
-    },
-    secondary: {
-      light: grey[500],
-      main: grey[800],
-      dark: "black"
-    },
     background: {
-      default: grey[200],
-      paper: grey[100],
+      default: grey[300],
+      paper: grey[200]
     }
   },
+
+  components: {
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          backgroundColor: grey[200],
+          color: grey[900]
+        }
+      }
+    }
+  }
 });
 
 export default light;

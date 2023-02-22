@@ -1,5 +1,12 @@
-import { Typography } from "@mui/material";
+import { Typography, Switch, Button } from "@mui/material";
+import PageWrapper from "../components/PageWrapper";
 
 export default function Root() {
-  return <h2>Trollf Feed</h2>;
+  return (
+    <PageWrapper>
+      <h2>Trolfeed</h2>
+      <Button variant="outlined">Hello</Button>
+      <Switch/>
+    </PageWrapper>
+  );
 }

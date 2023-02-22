@@ -2,7 +2,7 @@ import { createTheme } from "@mui/material/styles";
 import shared from "./shared";
 
 const dark = createTheme({
-  ...shared.breakpoints,
+  ...shared,
   palette: {
     mode: "dark",
     ...shared.palette,

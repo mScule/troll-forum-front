@@ -1,23 +1,25 @@
+import { useContext } from "react";
 import { RouterProvider } from "react-router-dom";
-import router from "./router";
-
-import CssBaseline from "@mui/material/CssBaseline";
+import { UserProvider } from "./contexts/User";
 import { ThemeProvider } from "@mui/material";
-import Container from "@mui/material/Container";
+import { NotificationProvider } from "./contexts/Notification";
 
-import TopBar from "./components/TopBar";
+import router from "./router";
+import CssBaseline from "@mui/material/CssBaseline";
 
-import dark from "./themes/dark";
-import light from "./themes/light";
+import ThemeSelectorContext from "./contexts/ThemeSelector";
 
 const App = () => {
+  const { theme } = useContext(ThemeSelectorContext);
+
   return (
-    <ThemeProvider theme={light}>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
-      <TopBar/>
-      <Container fixed>
-        <RouterProvider router={router} />
-      </Container>
+      <NotificationProvider>
+        <UserProvider>
+          <RouterProvider router={router} />
+        </UserProvider>
+      </NotificationProvider>
     </ThemeProvider>
   );
 };
