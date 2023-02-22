@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { RouterProvider } from "react-router-dom";
 import router from "./router";
 
@@ -8,17 +8,15 @@ import Container from "@mui/material/Container";
 
 import TopBar from "./components/TopBar";
 
-import dark from "./themes/dark";
-import light from "./themes/light";
-
-import axios from "./setup/axios";
+import ThemeSelectorContext from "./contexts/ThemeSelector";
 import Sidebar from "./components/Sidebar";
 
 const App = () => {
   const [showSideBar, setShowSideBar] = useState(false);
+  const { theme } = useContext(ThemeSelectorContext);
 
   return (
-    <ThemeProvider theme={dark}>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       <TopBar handleMenuButtonClick={() => setShowSideBar(!showSideBar)} />
       <Sidebar

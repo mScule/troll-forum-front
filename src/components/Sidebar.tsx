@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import {
   Box,
   Divider,
@@ -20,71 +20,80 @@ import {
 } from "react-icons/tb";
 import Logo from "./Logo";
 import { hide } from "../styles";
+import ThemeSelectorContext from "../contexts/ThemeSelector";
+import light from "../themes/light";
 
 interface Props {
   open: boolean;
   handleCloseSidebar: () => void;
 }
 
-const Sidebar: FC<Props> = ({ open, handleCloseSidebar }) => (
-  <Drawer
-    PaperProps={{ sx: { width: ["100%", "15rem"] } }}
-    anchor="right"
-    open={open}
-    onClose={handleCloseSidebar}
-  >
-    <Box sx={hide.desktop}>
-      <List disablePadding>
-        <ListItem
-          disableGutters
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            padding: 1,
-          }}
-        >
-          <Logo />
-          <IconButton onClick={handleCloseSidebar}>
-            <CloseIcon />
-          </IconButton>
+const Sidebar: FC<Props> = ({ open, handleCloseSidebar }) => {
+  const { theme, setTheme } = useContext(ThemeSelectorContext);
+
+  return (
+    <Drawer
+      PaperProps={{ sx: { width: ["100%", "15rem"] } }}
+      anchor="right"
+      open={open}
+      onClose={handleCloseSidebar}
+    >
+      <Box sx={hide.desktop}>
+        <List disablePadding>
+          <ListItem
+            disableGutters
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              padding: 1,
+            }}
+          >
+            <Logo />
+            <IconButton onClick={handleCloseSidebar}>
+              <CloseIcon />
+            </IconButton>
+          </ListItem>
+        </List>
+        <Divider />
+      </Box>
+      <List>
+        <ListItem>
+          <Typography variant="h2" fontSize={20}>
+            Login / Register
+          </Typography>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton sx={{ gap: "1rem" }}>
+            <LoginIcon />
+            Login
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton sx={{ gap: "1rem" }}>
+            <RegisterIcon />
+            Register
+          </ListItemButton>
         </ListItem>
       </List>
       <Divider />
-    </Box>
-    <List>
-      <ListItem>
-        <Typography variant="h2" fontSize={20}>
-          Login / Register
-        </Typography>
-      </ListItem>
-      <ListItem disablePadding>
-        <ListItemButton sx={{ gap: "1rem" }}>
-          <LoginIcon />
-          Login
-        </ListItemButton>
-      </ListItem>
-      <ListItem disablePadding>
-        <ListItemButton sx={{ gap: "1rem" }}>
-          <RegisterIcon />
-          Register
-        </ListItemButton>
-      </ListItem>
-    </List>
-    <Divider />
-    <List>
-      <ListItem>
-        <Typography variant="h2" fontSize={20}>
-          Theme
-        </Typography>
-      </ListItem>
-      <ListItem>
-        <DarkThemeIcon />
-        <Switch />
-        <LightThemeIcon />
-      </ListItem>
-    </List>
-  </Drawer>
-);
+      <List>
+        <ListItem>
+          <Typography variant="h2" fontSize={20}>
+            Theme
+          </Typography>
+        </ListItem>
+        <ListItem>
+          <DarkThemeIcon />
+          <Switch
+            checked={theme === light ? true : false}
+            onChange={() => setTheme(theme === light ? "dark" : "light")}
+          />
+          <LightThemeIcon />
+        </ListItem>
+      </List>
+    </Drawer>
+  );
+};
 
 export default Sidebar;
