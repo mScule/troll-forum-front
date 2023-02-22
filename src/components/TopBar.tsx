@@ -30,7 +30,6 @@ const TopBar: FC<Props> = ({ searchbar, handleMenuButtonClick }) => {
         <Logo />
         {searchbar && <Search />}
         <IconButton
-          sx={{ border: "solid", margin: 1 }}
           size="small"
           onClick={handleMenuButtonClick}
         >

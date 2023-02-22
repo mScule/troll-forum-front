@@ -9,7 +9,12 @@ export default function Logo() {
   const navigate = useNavigate();
 
   return (
-    <Stack direction="row" alignItems="center" onClick={() => navigate("/")}>
+    <Stack
+      direction="row"
+      alignItems="center"
+      onClick={() => navigate("/")}
+      sx={{ cursor: "pointer" }}
+    >
       <Stack padding={1} sx={rotateChildren(45)}>
         <AppIcon size={32} color={red[500]} />
       </Stack>

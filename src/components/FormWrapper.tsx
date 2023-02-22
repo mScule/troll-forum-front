@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Stack, Box, Card } from "@mui/material";
 import { FC } from "react";
 
 interface Props {
@@ -6,8 +6,16 @@ interface Props {
 }
 
 const FormWrapper: FC<Props> = ({ children }) => (
-  <Box sx={{ maxWidth: "30rem", marginRight: "auto", marginLeft: "auto" }}>
-    {children}
+  <Box
+    sx={{
+      maxWidth: "30rem",
+      marginRight: "auto",
+      marginLeft: "auto",
+    }}
+  >
+    <Card sx={{ padding: 3 }}>
+      <Stack gap={3}>{children}</Stack>
+    </Card>
   </Box>
 );
 

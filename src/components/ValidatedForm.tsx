@@ -1,0 +1,189 @@
+import { Typography, TextField, Button, TextFieldProps } from "@mui/material";
+import { FC, useState } from "react";
+import { Stack } from "@mui/material";
+import FormWrapper from "./FormWrapper";
+
+export type ValidatorResult = "success" | "failure";
+export type ValidationStatus = ValidatorResult | "pending" | "empty";
+
+export interface FormField {
+  value: string;
+  validation: ValidationStatus;
+}
+
+export type Validator = (value: string) => ValidatorResult;
+export type PendingValidator = (value: string) => Promise<ValidatorResult>;
+
+export interface FormSchemaField {
+  rows: number;
+  errorText: ((value: string) => string) | string;
+  validate?: Validator;
+  validatePending?: PendingValidator;
+}
+
+interface Props {
+  formName: string;
+  formSchema: Record<string, FormSchemaField>;
+  handleSubmit: (form: Record<string, string>) => Promise<void>;
+  submitLabel: string;
+}
+
+const initForm = (
+  formSchema: Record<string, FormSchemaField>
+): Record<string, FormField> => {
+  const form: Record<string, FormField> = {};
+  Object.keys(formSchema).forEach(
+    (field: string) => (form[field] = { value: "", validation: "empty" })
+  );
+  return form;
+};
+
+const multilineFieldProps = (rows: number) => ({
+  multiline: true,
+  rows,
+});
+
+const ValidatedForm: FC<Props> = ({
+  formName,
+  formSchema,
+  handleSubmit,
+  submitLabel,
+}) => {
+  const [form, setForm] = useState<Record<string, FormField>>(
+    initForm(formSchema)
+  );
+
+  const submit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log();
+  };
+
+  const isFormValidated = () => {
+    let isValidated = true;
+
+    for (const field of Object.values(form)) {
+      if (field.validation !== "success") {
+        isValidated = false;
+        break;
+      }
+    }
+
+    return isValidated;
+  };
+
+  const onValidation = (key: string): null | TextFieldProps => {
+    let errorText = formSchema[key].errorText;
+
+    switch (form[key].validation) {
+      case "success":
+        return {
+          color: "success",
+        };
+      case "pending":
+        return {
+          helperText: "Validating...",
+        };
+      case "failure":
+        return {
+          error: true,
+          helperText:
+            typeof errorText === "function"
+              ? (errorText as unknown as (value: string) => string)(
+                  form[key].value
+                )
+              : errorText,
+        };
+      default:
+        return null;
+    }
+  };
+
+  const capitalize = (value: string) =>
+    value[0].toUpperCase() + value.substring(1);
+
+  const validate = async (form: Record<string, FormField>) => {
+    const updatedForm = { ...form };
+    let containsPendingValidators = false;
+
+    for (const name of Object.keys(form)) {
+      const pendingValidator = formSchema[name].validatePending;
+      const validator = formSchema[name].validate;
+
+      if (validator) {
+        updatedForm[name].validation = validator(updatedForm[name].value);
+      } else if (pendingValidator) {
+        updatedForm[name].validation = "pending";
+        containsPendingValidators = true;
+      } else {
+        updatedForm[name].validation = "success";
+      }
+    }
+
+    setForm(updatedForm);
+
+    if (!containsPendingValidators) {
+      return;
+    }
+
+    const awaitedUpdatedForm = { ...updatedForm };
+
+    for (const name of Object.keys(form)) {
+      const pendingValidator = formSchema[name].validatePending;
+
+      if (pendingValidator) {
+        updatedForm[name].validation = await pendingValidator(
+          updatedForm[name].value
+        );
+      }
+    }
+
+    setForm(awaitedUpdatedForm);
+  };
+
+  const setValue = (key: string, value: string) => {
+    const updatedForm = { ...form };
+
+    updatedForm[key].value = value;
+
+    setForm(updatedForm);
+    validate(updatedForm);
+  };
+
+  return (
+    <FormWrapper>
+      <Typography component="h2" fontSize={25}>
+        {formName}
+      </Typography>
+
+      <Stack component="form" onSubmit={submit} gap={3}>
+        {Object.entries(formSchema).map(([fieldName, schema]) => {
+          return (
+            <TextField
+              key={`form-${formName}-field-${fieldName}`.toLowerCase()}
+              id={fieldName}
+              name={fieldName}
+              label={capitalize(fieldName)}
+              placeholder={capitalize(fieldName)}
+              onChange={(event) => setValue(fieldName, event.target.value)}
+              required
+              fullWidth
+              {...(schema.rows > 1 ? multilineFieldProps(schema.rows) : null)}
+              {...onValidation(fieldName)}
+            />
+          );
+        })}
+      </Stack>
+
+      <Button
+        type="submit"
+        variant="contained"
+        sx={{ marginTop: 3, marginBottom: 3 }}
+        disabled={!isFormValidated()}
+      >
+        {submitLabel}
+      </Button>
+    </FormWrapper>
+  );
+};
+
+export default ValidatedForm;
