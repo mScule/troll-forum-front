@@ -8,7 +8,7 @@ interface Props {
 const FormWrapper: FC<Props> = ({ children }) => (
   <Box
     sx={{
-      maxWidth: "30rem",
+      maxWidth: "45rem",
       marginRight: "auto",
       marginLeft: "auto",
     }}

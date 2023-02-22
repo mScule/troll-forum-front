@@ -53,12 +53,15 @@ const ValidatedForm: FC<Props> = ({
     initForm(formSchema)
   );
 
-  const submit = (event: React.FormEvent<HTMLFormElement>) => {
+  const submit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     const finishedForm: Record<string, string> = {};
-    for (const [key, field] of Object.entries(form)) {
+    for (const [key, field] of Object.entries({ ...form })) {
       finishedForm[key] = field.value;
     }
+
+    setForm(initForm(formSchema));
     handleSubmit(finishedForm);
   };
 
@@ -171,6 +174,7 @@ const ValidatedForm: FC<Props> = ({
               name={fieldName}
               label={capitalize(fieldName)}
               placeholder={capitalize(fieldName)}
+              value={form[fieldName].value}
               onChange={(event) => setValue(fieldName, event.target.value)}
               required
               fullWidth
@@ -182,7 +186,7 @@ const ValidatedForm: FC<Props> = ({
         <Button
           type="submit"
           variant="contained"
-          sx={{ marginTop: 3, marginBottom: 3 }}
+          sx={{ marginTop: 3, marginBottom: 3, width: "fit-content" }}
           disabled={!isFormValidated()}
         >
           {submitLabel}

@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { RouterProvider } from "react-router-dom";
+import NotificationProvider from "./contexts/Notification";
 import router from "./router";
 
 import CssBaseline from "@mui/material/CssBaseline";
@@ -12,7 +13,9 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <RouterProvider router={router} />
+      <NotificationProvider>
+        <RouterProvider router={router} />
+      </NotificationProvider>
     </ThemeProvider>
   );
 };
