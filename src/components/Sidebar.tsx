@@ -32,10 +32,10 @@ interface Props {
 }
 
 const Sidebar: FC<Props> = ({ open, handleCloseSidebar }) => {
+  const navigate = useNavigate();
+
   const { theme, setTheme } = useContext(ThemeSelectorContext);
   const user = useContext(UserContext);
-
-  const navigate = useNavigate();
 
   return (
     <Drawer
@@ -55,12 +55,16 @@ const Sidebar: FC<Props> = ({ open, handleCloseSidebar }) => {
               padding: 1,
             }}
           >
-            <Logo />
+            <Box onClick={handleCloseSidebar}>
+              <Logo />
+            </Box>
+
             <IconButton onClick={handleCloseSidebar}>
               <CloseIcon />
             </IconButton>
           </ListItem>
         </List>
+
         <Divider />
       </Box>
       <Box sx={hide.mobile}>
@@ -75,7 +79,7 @@ const Sidebar: FC<Props> = ({ open, handleCloseSidebar }) => {
       {user.isLoggedIn ? (
         <List
           sx={{
-            "& > *:first-child": { marginTop: 0 },
+            "& > *:first-of-type": { marginTop: 0 },
             "& > *": { marginTop: 2 },
           }}
         >
@@ -85,7 +89,13 @@ const Sidebar: FC<Props> = ({ open, handleCloseSidebar }) => {
             </Typography>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton sx={{ gap: "1rem" }}>
+            <ListItemButton
+              sx={{ gap: "1rem" }}
+              onClick={() => {
+                navigate(`/user/${user.id}`);
+                handleCloseSidebar();
+              }}
+            >
               <UserIcon />
               User page
             </ListItemButton>
@@ -97,7 +107,7 @@ const Sidebar: FC<Props> = ({ open, handleCloseSidebar }) => {
                 localStorage.removeItem("authorization");
                 user.setId(0);
                 user.setIsLoggedIn(false);
-                handleCloseSidebar()
+                handleCloseSidebar();
               }}
             >
               <LogoutIcon />
@@ -108,7 +118,7 @@ const Sidebar: FC<Props> = ({ open, handleCloseSidebar }) => {
       ) : (
         <List
           sx={{
-            "& > *:first-child": { marginTop: 0 },
+            "& > *:first-of-type": { marginTop: 0 },
             "& > *": { marginTop: 2 },
           }}
         >
@@ -120,7 +130,10 @@ const Sidebar: FC<Props> = ({ open, handleCloseSidebar }) => {
           <ListItem disablePadding>
             <ListItemButton
               sx={{ gap: "1rem" }}
-              onClick={() => navigate("/login")}
+              onClick={() => {
+                navigate("/login");
+                handleCloseSidebar();
+              }}
             >
               <LoginIcon />
               Login
@@ -129,7 +142,10 @@ const Sidebar: FC<Props> = ({ open, handleCloseSidebar }) => {
           <ListItem disablePadding>
             <ListItemButton
               sx={{ gap: "1rem" }}
-              onClick={() => navigate("/register")}
+              onClick={() => {
+                navigate("/register");
+                handleCloseSidebar();
+              }}
             >
               <RegisterIcon />
               Register

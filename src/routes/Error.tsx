@@ -1,19 +1,26 @@
+import { FC } from "react";
 import Link from "../components/Link";
 import { Container, Stack } from "@mui/system";
-import { Typography } from "@mui/material";
+import { Card, Typography } from "@mui/material";
+import ContentWrapper from "../components/ContentWrapper";
 
-export default function Error() {
+interface Props {
+  title: string;
+  message: string;
+}
+
+const Error: FC<Props> = ({ title, message }) => {
   return (
-    <Container sx={{ paddingTop: 4 }}>
+    <ContentWrapper>
       <Stack gap={2}>
         <Typography variant="h1" fontSize={24}>
-          Yikes!
+          {title}
         </Typography>
-        <Typography variant="body1">
-          It seems that the page you were looking for doesn't exist ¯\_(ツ)_/¯
-        </Typography>
-        <Link to="/">Back to home</Link>
+        <Typography variant="body1">{message}</Typography>
+        <Link to="/">Back to feed</Link>
       </Stack>
-    </Container>
+    </ContentWrapper>
   );
-}
+};
+
+export default Error;
