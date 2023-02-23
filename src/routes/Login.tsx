@@ -23,27 +23,17 @@ export default function Login() {
       formSchema={schema}
       submitLabel="Login"
       handleSubmit={async ({ username, password }) => {
-        try {
-          const response = (await axios.post("auth", { username, password }))
-            .data.token;
+        const response = (await axios.post("auth", { username, password })).data
+          .token;
 
-          localStorage.setItem("authorization", response);
+        localStorage.setItem("authorization", response);
 
-          user.setId(getUserId());
-          user.setIsLoggedIn(true);
-          navigate("/");
-
-          createNotification({
-            type: "success",
-            content: "Signed in successfully!",
-          });
-        } catch {
-          createNotification({
-            type: "error",
-            content: "Check your username and password.",
-          });
-        }
+        user.setId(getUserId());
+        user.setIsLoggedIn(true);
+        navigate("/");
       }}
+      successMessage="Signed in successfully!"
+      failureMessage="Check your username and password."
     />
   );
 }
