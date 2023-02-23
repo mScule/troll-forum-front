@@ -43,32 +43,30 @@ export default function Register() {
   };
 
   return (
-    <PageWrapper>
-      <ValidatedForm
-        formName="Registeration"
-        formSchema={schema}
-        submitLabel="Register"
-        handleSubmit={async (form) => {
-          try {
-            const { username } = (
-              await axios.post("user", {
-                username: form.username,
-                password: form.password,
-              })
-            ).data.user;
+    <ValidatedForm
+      formName="Registeration"
+      formSchema={schema}
+      submitLabel="Register"
+      handleSubmit={async (form) => {
+        try {
+          const { username } = (
+            await axios.post("user", {
+              username: form.username,
+              password: form.password,
+            })
+          ).data.user;
 
-            createNotification({
-              type: "success",
-              content: `User ${username} created successfully!`
-            });
-          } catch {
-            createNotification({
-              type: "error",
-              content: "Error was encountered while creating new user.",
-            });
-          }
-        }}
-      />
-    </PageWrapper>
+          createNotification({
+            type: "success",
+            content: `User ${username} created successfully!`,
+          });
+        } catch {
+          createNotification({
+            type: "error",
+            content: "Error was encountered while creating new user.",
+          });
+        }
+      }}
+    />
   );
 }

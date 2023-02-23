@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 export default function Login() {
   const createNotification = useContext(NotificationContext);
   const user = useContext(UserContext);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const schema: FormSchema = {
     username: { type: "text" },
@@ -18,34 +18,32 @@ export default function Login() {
   };
 
   return (
-    <PageWrapper>
-      <ValidatedForm
-        formName="Login"
-        formSchema={schema}
-        submitLabel="Login"
-        handleSubmit={async ({ username, password }) => {
-          try {
-            const response = (await axios.post("auth", { username, password }))
-              .data.token;
+    <ValidatedForm
+      formName="Login"
+      formSchema={schema}
+      submitLabel="Login"
+      handleSubmit={async ({ username, password }) => {
+        try {
+          const response = (await axios.post("auth", { username, password }))
+            .data.token;
 
-            localStorage.setItem("authorization", response);
+          localStorage.setItem("authorization", response);
 
-            user.setId(getUserId())
-            user.setIsLoggedIn(true)
-            navigate("/")
+          user.setId(getUserId());
+          user.setIsLoggedIn(true);
+          navigate("/");
 
-            createNotification({
-              type: "success",
-              content: "Signed in successfully!",
-            });
-          } catch {
-            createNotification({
-              type: "error",
-              content: "Check your username and password.",
-            });
-          }
-        }}
-      />
-    </PageWrapper>
+          createNotification({
+            type: "success",
+            content: "Signed in successfully!",
+          });
+        } catch {
+          createNotification({
+            type: "error",
+            content: "Check your username and password.",
+          });
+        }
+      }}
+    />
   );
 }

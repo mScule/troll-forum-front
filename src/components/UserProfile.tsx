@@ -1,53 +1,35 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import { useEffect } from "react";
-import axios from "axios";
-import { Button, CardActions, Typography } from "@mui/material";
+import { FC } from "react";
+import { Divider, Typography, Stack } from "@mui/material";
 
-const UserProfile = ({}) => {
-/*
-  useEffect(() => {
-    getUserData();
-  }, []);
+import ContentWrapper from "./ContentWrapper";
+import ContentHeader from "./ContentHeader";
+import Link from "./Link";
 
-  const getUserData = () => {
-    axios
-      .get("http://localhost:3001/v1/user/1")
-      .then((res) => {
-        console.log(res);
-        setUser(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-*/
-  const commonStyles = {
-    bgcolor: "background.paper",
-    border: 2,
-  };
+interface Props {
+  visitable?: boolean;
+  username: string;
+  id: number;
+}
 
-  return (
-    <div>
-      <h1>Profile</h1>
-      <Box
-        sx={{
-          ...commonStyles,
-          maxWidth: "350px",
-          maxHeight: "350px",
-          paddingLeft: "10px",
-          borderColor: "darkgrey",
-        }}
-      >
-        <h2>adsf</h2>
-        <Typography variant="body2" color="text.secondary">
-          #1234
-        </Typography>
-        <CardActions>
-          <Button>Settings</Button>
-        </CardActions>
-      </Box>
-    </div>
-  );
-};
+const UserProfile: FC<Props> = ({ visitable, username, id }) => (
+  <ContentWrapper>
+    <ContentHeader title={username} meta={`#${id}`} />
+    {visitable && <Link to={`/user/${id}`}>Visit</Link>}
+
+    <Stack direction="column" gap={1}>
+      <Typography variant="h4" fontSize={18}>
+        Posts
+      </Typography>
+      <Divider flexItem orientation="horizontal" />
+      <Typography variant="h4" fontSize={18}>
+        Comments
+      </Typography>
+      <Divider flexItem orientation="horizontal" />
+      <Typography variant="h4" fontSize={18}>
+        Reactions
+      </Typography>
+    </Stack>
+  </ContentWrapper>
+);
+
 export default UserProfile;
