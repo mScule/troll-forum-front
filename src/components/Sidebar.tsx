@@ -73,25 +73,31 @@ const Sidebar: FC<Props> = ({ open, handleCloseSidebar }) => {
         </List>
       </Box>
       {user.isLoggedIn ? (
-        <List>
+        <List
+          sx={{
+            "& > *:first-child": { marginTop: 0 },
+            "& > *": { marginTop: 2 },
+          }}
+        >
           <ListItem>
             <Typography variant="h3" fontSize={15}>
               User
             </Typography>
           </ListItem>
-          <ListItem>
+          <ListItem disablePadding>
             <ListItemButton sx={{ gap: "1rem" }}>
               <UserIcon />
               User page
             </ListItemButton>
           </ListItem>
-          <ListItem>
+          <ListItem disablePadding>
             <ListItemButton
               sx={{ gap: "1rem" }}
               onClick={() => {
                 localStorage.removeItem("authorization");
                 user.setId(0);
                 user.setIsLoggedIn(false);
+                handleCloseSidebar()
               }}
             >
               <LogoutIcon />
@@ -100,7 +106,12 @@ const Sidebar: FC<Props> = ({ open, handleCloseSidebar }) => {
           </ListItem>
         </List>
       ) : (
-        <List>
+        <List
+          sx={{
+            "& > *:first-child": { marginTop: 0 },
+            "& > *": { marginTop: 2 },
+          }}
+        >
           <ListItem>
             <Typography variant="h3" fontSize={15}>
               Login / Register
