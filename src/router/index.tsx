@@ -6,6 +6,7 @@ import Profile, { loader as profileLoader } from "../routes/Profile";
 import Register from "../routes/Register";
 import Login from "../routes/Login";
 import PageWrapper from "../components/PageWrapper";
+import Post from "../routes/Post";
 
 export default createBrowserRouter([
   {
@@ -42,6 +43,10 @@ export default createBrowserRouter([
             message="It seems that there's no user with given id."
           />
         ),
+      },
+      {
+        path: "/post",
+        element: <Post />,
       },
     ],
   },
