@@ -1,4 +1,4 @@
-import { Stack, Box, Card } from "@mui/material";
+import { Box, Card } from "@mui/material";
 import { FC } from "react";
 
 interface Props {

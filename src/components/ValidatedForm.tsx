@@ -1,6 +1,7 @@
 import { Typography, TextField, Button, TextFieldProps } from "@mui/material";
-import { FC, useState } from "react";
+import { FC, useState, useContext } from "react";
 import { Stack } from "@mui/material";
+import NotificationContext from "../contexts/Notification";
 import FormWrapper from "./FormWrapper";
 
 export type ValidatorResult = "success" | "failure";
@@ -29,6 +30,8 @@ interface Props {
   formSchema: FormSchema;
   handleSubmit: (form: Record<string, string>) => Promise<void>;
   submitLabel: string;
+  successMessage?: string;
+  failureMessage?: string;
 }
 
 const initForm = (formSchema: FormSchema): Record<string, FormField> => {
@@ -49,7 +52,11 @@ const ValidatedForm: FC<Props> = ({
   formSchema,
   handleSubmit,
   submitLabel,
+  successMessage,
+  failureMessage,
 }) => {
+  const createNotification = useContext(NotificationContext);
+
   const [form, setForm] = useState<Record<string, FormField>>(
     initForm(formSchema)
   );
@@ -63,7 +70,17 @@ const ValidatedForm: FC<Props> = ({
     }
 
     setForm(initForm(formSchema));
-    handleSubmit(finishedForm);
+
+    try {
+      await handleSubmit(finishedForm);
+      if (successMessage) {
+        createNotification({ type: "success", content: successMessage });
+      }
+    } catch (error) {
+      if (failureMessage) {
+        createNotification({ type: "error", content: failureMessage });
+      }
+    }
   };
 
   const isFormValidated = () => {
@@ -182,7 +199,9 @@ const ValidatedForm: FC<Props> = ({
               onChange={(event) => setValue(fieldName, event.target.value)}
               required
               fullWidth
-              {...(schema.rows && schema.rows > 1 ? multilineFieldProps(schema.rows) : null )}
+              {...(schema.rows && schema.rows > 1
+                ? multilineFieldProps(schema.rows)
+                : null)}
               {...onValidation(fieldName)}
             />
           );
