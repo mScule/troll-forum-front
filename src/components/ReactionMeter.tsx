@@ -73,8 +73,7 @@ const ReactionMeter: FC<Props> = ({ to }) => {
               reactionCounter.spam === 0 &&
               reactionCounter.troll === 0 && (
                 <Typography variant="body1" fontSize={12}>
-                  There's no reactions yet. Be the first one to ruin the authors
-                  day!
+                  No reactions
                 </Typography>
               )}
           </>

@@ -3,6 +3,8 @@ import { LoaderFunctionArgs, useLoaderData } from "react-router-dom";
 import UserProfile from "../components/UserProfile";
 import User from "../types/User";
 import Post from "../types/Post";
+import Reaction from "../types/Reaction";
+import Comment from "../types/Comment";
 
 export async function loader(args: LoaderFunctionArgs) {
   const { userId } = args.params;
@@ -16,13 +18,20 @@ export async function loader(args: LoaderFunctionArgs) {
 }
 
 export default function Profile() {
-  const data = useLoaderData() as { user: User; posts: Post[] };
+  const data = useLoaderData() as {
+    user: User;
+    posts: Post[];
+    comments: Comment[];
+    reactions: Reaction[];
+  };
 
   return (
     <UserProfile
       username={data.user.username}
       id={data.user.id}
       posts={data.posts}
+      comments={data.comments}
+      reactions={data.reactions}
     />
   );
 }

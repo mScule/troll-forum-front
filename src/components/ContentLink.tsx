@@ -1,5 +1,5 @@
 import { FC, ReactNode } from "react";
-import { Box, Card, Stack, Typography, Chip, Divider } from "@mui/material";
+import { Card, Stack, Typography, Chip, Divider } from "@mui/material";
 
 import { useNavigate } from "react-router-dom";
 
@@ -8,9 +8,11 @@ interface Props {
   title: string;
   meta?: string;
   children?: ReactNode;
+  oneliner?: boolean;
+
 }
 
-const ContentLink: FC<Props> = ({ title, meta, to, children }) => {
+const ContentLink: FC<Props> = ({ title, meta, to, children, oneliner }) => {
   const navigate = useNavigate();
 
   return (
@@ -22,18 +24,30 @@ const ContentLink: FC<Props> = ({ title, meta, to, children }) => {
       }}
       onClick={() => navigate(to)}
     >
-      <Stack direction="row" alignContent="left" alignItems="center" justifyContent="space-between">
-        <Typography variant="h3" fontSize={20}>
-          <b>{title}</b>
-        </Typography>
-        {meta && <Chip label={meta} />}
+      <Stack direction={oneliner ? "row" : "column"} gap={oneliner ? 1 : 0}>
+        <Stack
+          direction="row"
+          alignContent="left"
+          alignItems="center"
+          justifyContent="space-between"
+          gap={oneliner ? 1 : 0}
+        >
+          <Typography variant="h3" fontSize={16}>
+            <b>{title}</b>
+          </Typography>
+          {meta && <Chip label={meta} />}
+        </Stack>
+        {children && (
+          <>
+            <Divider
+              sx={{ marginTop: 1, marginBottom: 1 }}
+              flexItem
+              orientation={oneliner ? "vertical" : "horizontal"}
+            />
+            {children}
+          </>
+        )}
       </Stack>
-      {children && (
-        <>
-          <Divider sx={{ marginTop: 1, marginBottom: 1 }} />
-          {children}
-        </>
-      )}
     </Card>
   );
 };
