@@ -7,6 +7,7 @@ import Register from "../routes/Register";
 import Login from "../routes/Login";
 import PageWrapper from "../components/PageWrapper";
 import Post from "../routes/Post";
+import PostId, { loader as postIdLoader } from "../routes/PostId";
 
 export default createBrowserRouter([
   {
@@ -47,6 +48,11 @@ export default createBrowserRouter([
       {
         path: "/post",
         element: <Post />,
+      },
+      {
+        path: "/post/:postId",
+        loader: postIdLoader,
+        element: <PostId />,
       },
     ],
   },

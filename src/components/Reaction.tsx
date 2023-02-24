@@ -1,5 +1,13 @@
 import { FC } from "react";
-import { Box, Card, Stack, Typography, SxProps, Divider } from "@mui/material";
+import {
+  Box,
+  Card,
+  Stack,
+  Typography,
+  SxProps,
+  Divider,
+  Tooltip,
+} from "@mui/material";
 import { TbThumbUp as SelectedIcon } from "react-icons/tb";
 
 type ReactionType = "dull" | "spam" | "troll";
@@ -33,37 +41,39 @@ interface Props {
 }
 
 const Reaction: FC<Props> = ({ type, amount, selected }) => (
-  <Card variant="outlined" sx={{ width: "min-content" }}>
-    <Stack direction="row">
-      <Box
-        sx={reactionIcon({
-          path: switchExpression(
-            type,
-            "",
-            ["troll", TrollGif],
-            ["dull", DullGif],
-            ["spam", SpamGif]
-          ),
-          size: 86,
-        })}
-      />
+  <Tooltip title={`Reaction: ${type}`}>
+    <Card variant="outlined" sx={{ width: "min-content" }}>
+      <Stack direction="row">
+        <Box
+          sx={reactionIcon({
+            path: switchExpression(
+              type,
+              "",
+              ["troll", TrollGif],
+              ["dull", DullGif],
+              ["spam", SpamGif]
+            ),
+            size: 86,
+          })}
+        />
 
-      {amount !== undefined && (
-        <>
-          <Divider orientation="vertical" flexItem />
-          <Typography padding={1}>{amount}</Typography>
-        </>
-      )}
-      {selected && (
-        <>
-          <Divider orientation="vertical" flexItem />
+        {amount !== undefined && (
+          <>
+            <Divider orientation="vertical" flexItem />
+            <Typography padding={1}>{amount}</Typography>
+          </>
+        )}
+        {selected && (
+          <>
+            <Divider orientation="vertical" flexItem />
 
-          <Box padding={1} alignItems="center">
-            <SelectedIcon />
-          </Box>
-        </>
-      )}
-    </Stack>
-  </Card>
+            <Box padding={1} alignItems="center">
+              <SelectedIcon />
+            </Box>
+          </>
+        )}
+      </Stack>
+    </Card>
+  </Tooltip>
 );
 export default Reaction;
