@@ -18,7 +18,7 @@ const PageWrapper: FC<Props> = ({ searchbar, children }) => {
     <>
       <TopBar searchbar={searchbar} handleMenuButtonClick={handleShowSidebar} />
       <Sidebar open={showSideBar} handleCloseSidebar={handleShowSidebar} />
-      <Container fixed sx={{ marginTop: 8 }}>
+      <Container fixed sx={{ marginTop: 8, marginBottom: 4 }}>
         {children}
       </Container>
     </>

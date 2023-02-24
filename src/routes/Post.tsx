@@ -4,7 +4,7 @@ import axios from "../setup/axios";
 export default function Post() {
   const schema: FormSchema = {
     title: { type: "text" },
-    body: { type: "text", rows: 4 },
+    body: { type: "text", rows: 10 },
   };
 
   return (
@@ -19,7 +19,7 @@ export default function Post() {
         }
       }}
       submitWarning={
-        "Remember! You can't remove your posts, so be mindfull of the type of content you decide to put up 👺"
+        "Remember! You can't remove your posts, so be mindfull (or not) of the type of content you decide to put up 👺"
       }
       submitLabel={"Post"}
       successMessage={"Post created!"}

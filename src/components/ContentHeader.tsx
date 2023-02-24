@@ -7,17 +7,18 @@ interface Props {
 }
 
 const ContentHeader: FC<Props> = ({ title, meta }) => (
-  <Card
-    sx={{ marginBottom: 1, padding: 1, width: "fit-content" }}
-    variant="outlined"
+  <Stack
+    direction="row"
+    alignContent="left"
+    alignItems="center"
+    justifyContent="space-between"
+    marginBottom={4}
   >
-    <Stack direction="row" alignContent="left" alignItems="center" gap={5}>
-      <Typography variant="h3" fontSize={20}>
-        <b>{title}</b>
-      </Typography>
-      {meta && <Chip label={meta} />}
-    </Stack>
-  </Card>
+    <Typography variant="h3" fontSize={20}>
+      <b>{title}</b>
+    </Typography>
+    {meta && <Chip label={meta} />}
+  </Stack>
 );
 
 export default ContentHeader;

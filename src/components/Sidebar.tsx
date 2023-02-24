@@ -18,6 +18,7 @@ import {
   TbSun as LightThemeIcon,
   TbUser as UserIcon,
   TbLogout as LogoutIcon,
+  TbPencil as PostIcon,
 } from "react-icons/tb";
 import Logo from "./Logo";
 import { hide } from "../styles";
@@ -98,6 +99,18 @@ const Sidebar: FC<Props> = ({ open, handleCloseSidebar }) => {
             >
               <UserIcon />
               User page
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton
+              sx={{ gap: "1rem" }}
+              onClick={() => {
+                navigate("/post");
+                handleCloseSidebar();
+              }}
+            >
+              <PostIcon />
+              Create post
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
