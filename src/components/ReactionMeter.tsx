@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from "react";
+import { FC, useState, useEffect, useContext } from "react";
 import axios from "../setup/axios";
 
 import { Stack, Typography } from "@mui/material";
@@ -7,17 +7,24 @@ import Reaction from "./Reaction";
 import { grey } from "@mui/material/colors";
 import LoadingPill from "./LoadingPill";
 import ReactionType from "../types/Reaction";
+import ReactionControls from "./ReactionControls";
+import { UserContext } from "../contexts/User";
 
 interface Props {
   to: string;
+  controls?: boolean;
 }
 
-const ReactionMeter: FC<Props> = ({ to }) => {
+const ReactionMeter: FC<Props> = ({ to, controls }) => {
   const [reactionCounter, setReactionCounter] = useState<null | {
     dull: number;
     spam: number;
     troll: number;
   }>(null);
+
+  const user = useContext(UserContext);
+
+  async function updateMeter() {}
 
   useEffect(() => {
     (async () => {
@@ -57,7 +64,7 @@ const ReactionMeter: FC<Props> = ({ to }) => {
       <Typography variant="h4" fontSize={14}>
         Reactions:
       </Typography>
-      <Stack direction={["column", "row"]} gap={2}>
+      <Stack direction={["column", "row"]} gap={2} alignItems="center">
         {reactionCounter ? (
           <>
             {reactionCounter.dull !== 0 && (
@@ -79,6 +86,10 @@ const ReactionMeter: FC<Props> = ({ to }) => {
           </>
         ) : (
           <LoadingPill message="Loading" />
+        )}
+
+        {user.isLoggedIn && controls && (
+          <ReactionControls handleClick={async () => {}} />
         )}
       </Stack>
     </Stack>
