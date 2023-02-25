@@ -9,6 +9,14 @@ import LoadingPill from "./LoadingPill";
 import ReactionType from "../types/Reaction";
 import ReactionControls from "./ReactionControls";
 import { UserContext } from "../contexts/User";
+import switchExpression from "../expression/switchExpression";
+
+interface ReactionMeterState {
+  dull: number;
+  spam: number;
+  troll: number;
+  reaction?: ReactionType;
+}
 
 interface Props {
   to: string;
@@ -16,46 +24,49 @@ interface Props {
 }
 
 const ReactionMeter: FC<Props> = ({ to, controls }) => {
-  const [reactionCounter, setReactionCounter] = useState<null | {
-    dull: number;
-    spam: number;
-    troll: number;
-  }>(null);
+  const [reactionCounter, setReactionCounter] =
+    useState<null | ReactionMeterState>(null);
+  const [reactionPending, setReactionPending] = useState<boolean>(false);
 
   const user = useContext(UserContext);
 
-  async function updateMeter() {}
+  async function updateMeter() {
+    try {
+      const reactions = (await axios.get(to)).data.reactions as ReactionType[];
+
+      const updated: ReactionMeterState = {
+        dull: 0,
+        spam: 0,
+        troll: 0,
+      };
+
+      reactions.forEach((reaction) => {
+        if (reaction.userId === user.id) {
+          updated.reaction = reaction;
+        }
+
+        switch (reaction.type) {
+          case "DULL":
+            updated.dull++;
+            break;
+
+          case "SPAM":
+            updated.spam++;
+            break;
+
+          case "TROLL":
+            updated.troll++;
+            break;
+        }
+      });
+
+      setReactionCounter(updated);
+    } catch {}
+  }
 
   useEffect(() => {
     (async () => {
-      try {
-        const reactions = (await axios.get(to)).data
-          .reactions as ReactionType[];
-
-        const updated = {
-          dull: 0,
-          spam: 0,
-          troll: 0,
-        };
-
-        reactions.forEach((reaction) => {
-          switch (reaction.type) {
-            case "DULL":
-              updated.dull++;
-              break;
-            case "SPAM":
-              updated.spam++;
-              break;
-            case "TROLL":
-              updated.troll++;
-              break;
-          }
-        });
-
-        setReactionCounter(updated);
-      } catch (error) {
-        console.log(error);
-      }
+      await updateMeter();
     })();
   }, []);
 
@@ -64,7 +75,11 @@ const ReactionMeter: FC<Props> = ({ to, controls }) => {
       <Typography variant="h4" fontSize={14}>
         Reactions:
       </Typography>
-      <Stack direction={["column", "row"]} gap={2} alignItems="center">
+      <Stack
+        direction={["column", "row"]}
+        gap={2}
+        alignItems={["left", "center"]}
+      >
         {reactionCounter ? (
           <>
             {reactionCounter.dull !== 0 && (
@@ -89,7 +104,41 @@ const ReactionMeter: FC<Props> = ({ to, controls }) => {
         )}
 
         {user.isLoggedIn && controls && (
-          <ReactionControls handleClick={async () => {}} />
+          <ReactionControls
+            selected={switchExpression(
+              reactionCounter?.reaction?.type,
+              undefined,
+              ["DULL", "dull"],
+              ["SPAM", "spam"],
+              ["TROLL", "troll"]
+            )}
+            handleClick={async (type) => {
+              if (!reactionCounter) {
+                return;
+              }
+
+              setReactionPending(true);
+
+              if (reactionCounter.reaction) {
+                await axios.delete(`/reaction/${reactionCounter.reaction?.id}`);
+              }
+
+              await axios.post(to, {
+                type: switchExpression(
+                  type,
+                  "DULL",
+                  ["dull", "DULL"],
+                  ["spam", "SPAM"],
+                  ["troll", "TROLL"]
+                ),
+              });
+
+              await updateMeter();
+
+              setReactionPending(false);
+            }}
+            pending={reactionPending}
+          />
         )}
       </Stack>
     </Stack>
