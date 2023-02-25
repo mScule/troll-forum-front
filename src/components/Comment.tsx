@@ -41,6 +41,12 @@ const Comment: FC<Props> = ({ comment }) => {
         borderRight: "none",
         borderBottomRightRadius: 0,
         borderTopRightRadius: 0,
+        ...(comment.replyId
+          ? {
+              borderTop: "none",
+              borderTopLeftRadius: 0,
+            }
+          : null),
       }}
     >
       <Stack direction="row" gap={2}>
@@ -51,11 +57,12 @@ const Comment: FC<Props> = ({ comment }) => {
                 direction="row"
                 alignContent="left"
                 alignItems="center"
-                justifyContent="space-between"
+                gap={2}
               >
                 <Chip label={data.user.username} />
-                <ReactionMeter to={`comment/${comment.id}/reaction`} />
+                <Chip label={comment.postId ? "Comment" : "Reply"} />
               </Stack>
+              <ReactionMeter to={`comment/${comment.id}/reaction`} />
 
               <Typography variant="body1" fontSize={16}>
                 {comment.body}
