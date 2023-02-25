@@ -1,13 +1,14 @@
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 import { Stack, Typography, Chip, Divider } from "@mui/material";
 
 interface Props {
   title: string;
   meta?: string;
+  children?: ReactNode;
 }
 
-const ContentHeader: FC<Props> = ({ title, meta }) => (
-  <>
+const ContentHeader: FC<Props> = ({ title, meta, children }) => (
+  <Stack direction="column" gap={2} marginBottom={1.5}>
     <Stack
       direction="row"
       alignContent="left"
@@ -20,8 +21,9 @@ const ContentHeader: FC<Props> = ({ title, meta }) => (
 
       {meta && <Chip label={meta} />}
     </Stack>
-    <Divider orientation="horizontal" sx={{ marginTop: 2, marginBottom: 2 }} />
-  </>
+    {children && children}
+    <Divider orientation="horizontal"/>
+  </Stack>
 );
 
 export default ContentHeader;
