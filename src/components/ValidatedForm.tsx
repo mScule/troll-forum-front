@@ -1,4 +1,10 @@
-import { Typography, TextField, Button, TextFieldProps } from "@mui/material";
+import {
+  Typography,
+  TextField,
+  Button,
+  TextFieldProps,
+  Alert,
+} from "@mui/material";
 import { FC, useState, useContext } from "react";
 import { Stack } from "@mui/material";
 import NotificationContext from "../contexts/Notification";
@@ -30,6 +36,8 @@ interface Props {
   formSchema: FormSchema;
   handleSubmit: (form: Record<string, string>) => Promise<void>;
   submitLabel: string;
+  submitInfo?: string;
+  submitWarning?: string;
   successMessage?: string;
   failureMessage?: string;
 }
@@ -52,6 +60,8 @@ const ValidatedForm: FC<Props> = ({
   formSchema,
   handleSubmit,
   submitLabel,
+  submitInfo,
+  submitWarning,
   successMessage,
   failureMessage,
 }) => {
@@ -206,6 +216,16 @@ const ValidatedForm: FC<Props> = ({
             />
           );
         })}
+        {submitInfo && (
+          <Alert variant="outlined" severity="info">
+            {submitInfo}
+          </Alert>
+        )}
+        {submitWarning && (
+          <Alert variant="outlined" severity="warning">
+            {submitWarning}
+          </Alert>
+        )}
         <Button
           type="submit"
           variant="contained"

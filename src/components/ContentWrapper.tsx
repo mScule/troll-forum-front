@@ -15,7 +15,7 @@ const ContentWrapper: FC<Props> = ({ fitContent, children }) => (
       marginLeft: "auto",
     }}
   >
-    <Card sx={{ padding: 3 }}>
+    <Card variant="outlined" sx={{ padding: 3 }}>
       {children}
     </Card>
   </Box>
