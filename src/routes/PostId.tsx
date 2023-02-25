@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import axios from "../setup/axios";
 import {
   LoaderFunctionArgs,
@@ -14,6 +15,7 @@ import ReactionMeter from "../components/ReactionMeter";
 import Comment from "../components/Comment";
 import { grey } from "@mui/material/colors";
 import ValidatedForm from "../components/ValidatedForm";
+import { UserContext } from "../contexts/User";
 
 export async function loader(args: LoaderFunctionArgs) {
   const { postId } = args.params;
@@ -31,6 +33,7 @@ export default function PostId() {
   };
 
   const revalidator = useRevalidator();
+  const user = useContext(UserContext);
 
   const commentSection =
     data.comments.length > 0 ? (
@@ -49,7 +52,10 @@ export default function PostId() {
     <Stack direction="column" gap={2} id={`post-${data.post.id}`}>
       <ContentWrapper>
         <Stack gap={1}>
-          <ContentHeader title={data.post.title} meta={data.user.username}>
+          <ContentHeader
+            title={data.post.title}
+            meta={`${data.user.username} #${data.user.id}`}
+          >
             <Typography color={grey[500]} variant="body1">
               {new Date(data.post.date).toLocaleString("en-GB")}
             </Typography>
@@ -67,18 +73,22 @@ export default function PostId() {
           </Stack>
         </Stack>
       </ContentWrapper>
-      <Box width="100%">
-        <ValidatedForm
-          formName="Write a comment"
-          formSchema={{ comment: { type: "text", rows: 4 } }}
-          submitWarning="Like with posts. You can't delete your comments, so think twice what you write 💀"
-          submitLabel="Create"
-          handleSubmit={async ({ comment }) => {
-            await axios.post(`post/${data.post.id}/comment`, { body: comment });
-            revalidator.revalidate();
-          }}
-        />
-      </Box>
+      {user.isLoggedIn && (
+        <Box width="100%">
+          <ValidatedForm
+            formName="Write a comment"
+            formSchema={{ comment: { type: "text", rows: 4 } }}
+            submitWarning="Like with posts. You can't delete your comments, so think twice what you write 💀"
+            submitLabel="Create"
+            handleSubmit={async ({ comment }) => {
+              await axios.post(`post/${data.post.id}/comment`, {
+                body: comment,
+              });
+              revalidator.revalidate();
+            }}
+          />
+        </Box>
+      )}
     </Stack>
   );
 }
