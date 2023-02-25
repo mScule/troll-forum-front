@@ -7,12 +7,15 @@ import ReactionType from "../types/Reaction";
 import ReactionMeter from "./ReactionMeter";
 import CommentType from "../types/Comment";
 import { grey } from "@mui/material/colors";
+import Link from "./Link";
+import HashLink from "./HashLink";
 
 interface Props {
   comment: CommentType;
+  parent?: CommentType;
 }
 
-const Comment: FC<Props> = ({ comment }) => {
+const Comment: FC<Props> = ({ comment, parent }) => {
   const [data, setData] = useState<null | {
     user: UserType;
     replies: CommentType[];
@@ -41,7 +44,20 @@ const Comment: FC<Props> = ({ comment }) => {
         borderRight: "none",
         borderBottomRightRadius: 0,
         borderTopRightRadius: 0,
+        ...(comment.replyId
+          ? {
+              borderTop: "none",
+              borderTopLeftRadius: 0,
+            }
+          : null),
       }}
+      id={
+        parent
+          ? parent.postId
+            ? `comment-${parent.id}`
+            : `reply-${parent.id}`
+          : `post-${comment.postId}`
+      }
     >
       <Stack direction="row" gap={2}>
         <Box width="100%">
@@ -51,11 +67,35 @@ const Comment: FC<Props> = ({ comment }) => {
                 direction="row"
                 alignContent="left"
                 alignItems="center"
-                justifyContent="space-between"
+                gap={2}
               >
                 <Chip label={data.user.username} />
-                <ReactionMeter to={`comment/${comment.id}/reaction`} />
+                <Chip
+                  label={
+                    comment.postId
+                      ? `Comment #${comment.id}`
+                      : `Reply #${comment.id}`
+                  }
+                />
+                <HashLink
+                  offset={-200}
+                  to={
+                    parent
+                      ? parent.postId
+                        ? `#comment-${parent.id}`
+                        : `#reply-${parent.id}`
+                      : `#post-${comment.postId}`
+                  }
+                >
+                  {"to " +
+                    (parent
+                      ? parent.postId
+                        ? `Comment #${parent.id}`
+                        : `Reply #${parent.id}`
+                      : `Post #${comment.postId}`)}
+                </HashLink>
               </Stack>
+              <ReactionMeter controls to={`comment/${comment.id}/reaction`} />
 
               <Typography variant="body1" fontSize={16}>
                 {comment.body}
@@ -63,7 +103,11 @@ const Comment: FC<Props> = ({ comment }) => {
 
               {data.replies.length > 0 &&
                 data.replies.map((reply) => (
-                  <Comment key={`reply-#${reply.id}`} comment={reply} />
+                  <Comment
+                    key={`reply-#${reply.id}`}
+                    parent={comment}
+                    comment={reply}
+                  />
                 ))}
             </Stack>
           ) : (
