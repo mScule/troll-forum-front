@@ -8,6 +8,7 @@ import Login from "../routes/Login";
 import PageWrapper from "../components/PageWrapper";
 import Post from "../routes/Post";
 import PostId, { loader as postIdLoader } from "../routes/PostId";
+import PostContainer from "../components/PostContainer";
 
 export default createBrowserRouter([
   {
@@ -24,7 +25,7 @@ export default createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <p>Feed</p>,
+        element: <PostContainer/>,
       },
       {
         path: "/register",
