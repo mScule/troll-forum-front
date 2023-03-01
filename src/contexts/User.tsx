@@ -14,7 +14,7 @@ export const UserContext = createContext({
   logout: () => {
     notInitialized();
   },
-  getId: (): number | undefined => 0,
+  getId: (): number | null => null,
   getLoginStatus: (): boolean => false,
 });
 
@@ -36,18 +36,18 @@ export const UserProvider: FC<Props> = ({ children }) => {
     setLoginStatus(false);
   }
 
-  function getId() {
+  function getId(): number | null {
     const authToken = localStorage.getItem("authorization");
 
     if (!authToken) {
-      throw new Error("No authorization token found");
+      return null;
     }
 
     try {
       return (jwtDecode(authToken) as { data: { id: number } }).data.id;
     } catch {
-      console.error("Authorization token cannot be parsed");
-      setLoginStatus(false);
+      logout();
+      return null;
     }
   }
 

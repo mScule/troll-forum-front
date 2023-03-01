@@ -18,7 +18,7 @@ interface Props {
 const ReactionControls: FC<Props> = ({ handleClick, selected, pending }) => {
   const dullIcon = "😴";
   const spamIcon = "🥫";
-  const trollIcon = "💢";
+  const trollIcon = "🧌";
 
   const iconStyle: SxProps = { transform: "translateY(-1px)" };
   const selectedStyle: SxProps = { border: "solid", color: grey[500] };

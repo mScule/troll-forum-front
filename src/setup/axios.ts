@@ -1,11 +1,21 @@
 import axios from "axios"
 
-const instance = axios.create({
-    baseURL: import.meta.env.VITE_API_URL,
-    timeout: 10000,
-    headers: {
-        "Authorization": `${localStorage.getItem("authorization")}`
-    }
-});
+function createInstance() {
+    const instance = axios.create({
+        baseURL: import.meta.env.VITE_API_URL,
+        timeout: 10000,
+    });
 
-export default instance;
+    instance.interceptors.request.use((config) => {
+        config.headers.Authorization = localStorage.getItem("authorization")
+        return config;
+    }, (error) => {
+        return Promise.reject(error);
+    });
+
+    return instance
+}
+
+const globalInstance = createInstance();
+
+export default globalInstance;
