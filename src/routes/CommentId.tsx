@@ -63,7 +63,7 @@ export default function CommentId() {
             meta={`${data.user.username} #${data.user.id}`}
           >
           </ContentHeader>
-          <ReactionMeter controls to={`/post/${data.comment.id}/reaction`} />
+          <ReactionMeter controls to={`/comment/${data.comment.id}/reaction`} />
           <Typography variant="body1">{data.comment.body}</Typography>
 
           <Divider sx={{ marginBottom: 1, marginTop: 1 }} />
