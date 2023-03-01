@@ -1,14 +1,12 @@
 import { FC, useState, useEffect } from "react";
 import axios from "../setup/axios";
-import { Stack, Typography, Chip, Box, Card } from "@mui/material";
+import { Stack, Typography, Chip, Box, Card, IconButton } from "@mui/material";
 import UserType from "../types/User";
 import LoadingPill from "./LoadingPill";
-import ReactionType from "../types/Reaction";
+import { TbExternalLink as LinkIcon } from "react-icons/tb";
 import ReactionMeter from "./ReactionMeter";
 import CommentType from "../types/Comment";
-import { grey } from "@mui/material/colors";
-import Link from "./Link";
-import HashLink from "./HashLink";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   comment: CommentType;
@@ -16,6 +14,8 @@ interface Props {
 }
 
 const Comment: FC<Props> = ({ comment, parent }) => {
+  const navigate = useNavigate();
+
   const [data, setData] = useState<null | {
     user: UserType;
     replies: CommentType[];
@@ -69,7 +69,7 @@ const Comment: FC<Props> = ({ comment, parent }) => {
                 alignItems="center"
                 gap={2}
               >
-                <Chip label={data.user.username} />
+                <Chip label={`${data.user.username} #${data.user.id}`} />
                 <Chip
                   label={
                     comment.postId
@@ -77,23 +77,20 @@ const Comment: FC<Props> = ({ comment, parent }) => {
                       : `Reply #${comment.id}`
                   }
                 />
-                <HashLink
-                  offset={-200}
-                  to={
-                    parent
-                      ? parent.postId
-                        ? `#comment-${parent.id}`
-                        : `#reply-${parent.id}`
-                      : `#post-${comment.postId}`
-                  }
-                >
-                  {"to " +
-                    (parent
-                      ? parent.postId
+                {parent && (
+                  <Chip
+                    variant="outlined"
+                    label={
+                      "to " +
+                      (parent.postId
                         ? `Comment #${parent.id}`
-                        : `Reply #${parent.id}`
-                      : `Post #${comment.postId}`)}
-                </HashLink>
+                        : `Reply #${parent.id}`)
+                    }
+                  />
+                )}
+                <IconButton size="small" onClick={() => navigate(`/comment/${comment.id}`)}>
+                  <LinkIcon />
+                </IconButton>
               </Stack>
               <ReactionMeter controls to={`comment/${comment.id}/reaction`} />
 
