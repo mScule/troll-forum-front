@@ -15,8 +15,10 @@ export default function Logo() {
       onClick={() => navigate("/")}
       sx={{ cursor: "pointer" }}
     >
-      <Stack padding={1} sx={rotateChildren(45)}>
-        <AppIcon size={32} color={red[500]} />
+      <Stack padding={1}>
+        <Typography fontSize={24} sx={{ transform: "translateY(1px)" }}>
+          💢
+        </Typography>
       </Stack>
       <Typography noWrap variant={"h1"} fontSize={20} fontWeight="bold">
         Trolf
