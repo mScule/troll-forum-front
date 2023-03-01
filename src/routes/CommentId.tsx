@@ -61,8 +61,7 @@ export default function CommentId() {
                 : `Reply to comment #${data.comment.replyId}`
             }
             meta={`${data.user.username} #${data.user.id}`}
-          >
-          </ContentHeader>
+          ></ContentHeader>
           <ReactionMeter controls to={`/comment/${data.comment.id}/reaction`} />
           <Typography variant="body1">{data.comment.body}</Typography>
 

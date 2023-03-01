@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { red } from "@mui/material/colors";
 import { Typography, Stack } from "@mui/material";
 
-import { hide, rotateChildren } from "../styles";
+import { rotateChildren } from "../styles";
 
 export default function Logo() {
   const navigate = useNavigate();

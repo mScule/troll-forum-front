@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Divider, Typography, Stack, Box } from "@mui/material";
+import { Typography, Stack } from "@mui/material";
 
 import ContentWrapper from "./ContentWrapper";
 import ContentHeader from "./ContentHeader";
