@@ -8,6 +8,7 @@ import Login from "../routes/Login";
 import PageWrapper from "../components/PageWrapper";
 import Post from "../routes/Post";
 import PostId, { loader as postIdLoader } from "../routes/PostId";
+import CommentId, { loader as commentIdLoader } from "../routes/CommentId";
 
 export default createBrowserRouter([
   {
@@ -40,8 +41,19 @@ export default createBrowserRouter([
         element: <Profile />,
         errorElement: (
           <Error
-            title="🔎👀"
+            title="🪪❌"
             message="It seems that there's no user with given id."
+          />
+        ),
+      },
+      {
+        path: "/comment/:commentId",
+        loader: commentIdLoader,
+        element: <CommentId/>,
+        errorElement: (
+          <Error
+            title="🗯️❌"
+            message="It seems that there's no comment with given id."
           />
         ),
       },
@@ -53,6 +65,12 @@ export default createBrowserRouter([
         path: "/post/:postId",
         loader: postIdLoader,
         element: <PostId />,
+        errorElement: (
+          <Error
+            title="🗞️❌"
+            message="It seems that there's no post with given id."
+          />
+        ),
       },
     ],
   },
