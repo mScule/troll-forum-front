@@ -17,5 +17,4 @@ function createInstance() {
 }
 
 const globalInstance = createInstance();
-
 export default globalInstance;

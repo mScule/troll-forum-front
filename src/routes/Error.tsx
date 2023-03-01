@@ -1,7 +1,7 @@
 import { FC } from "react";
 import Link from "../components/Link";
-import { Container, Stack } from "@mui/system";
-import { Card, Typography } from "@mui/material";
+import { Stack } from "@mui/system";
+import { Typography } from "@mui/material";
 import ContentWrapper from "../components/ContentWrapper";
 
 interface Props {

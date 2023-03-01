@@ -10,6 +10,7 @@ import Post from "../routes/Post";
 import PostId, { loader as postIdLoader } from "../routes/PostId";
 import CommentId, { loader as commentIdLoader } from "../routes/CommentId";
 import PostContainer from "../components/PostContainer";
+import Search, { loader as searchLoader } from "../routes/Search";
 
 export default createBrowserRouter([
   {
@@ -26,7 +27,7 @@ export default createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <PostContainer/>,
+        element: <PostContainer />,
       },
       {
         path: "/register",
@@ -50,7 +51,7 @@ export default createBrowserRouter([
       {
         path: "/comment/:commentId",
         loader: commentIdLoader,
-        element: <CommentId/>,
+        element: <CommentId />,
         errorElement: (
           <Error
             title="🗯️❌"
@@ -72,6 +73,11 @@ export default createBrowserRouter([
             message="It seems that there's no post with given id."
           />
         ),
+      },
+      {
+        path: "/search/:searchValue",
+        loader: searchLoader,
+        element: <Search />,
       },
     ],
   },

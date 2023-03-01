@@ -3,7 +3,7 @@ import PageWrapper from "../components/PageWrapper";
 
 export default function Root() {
   return (
-    <PageWrapper>
+    <PageWrapper searchbar>
       <Outlet />
     </PageWrapper>
   );
