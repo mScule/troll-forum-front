@@ -76,7 +76,7 @@ export default function CommentId() {
           </Stack>
         </Stack>
       </ContentWrapper>
-      {user.isLoggedIn && (
+      {user.getLoginStatus() && (
         <Box width="100%">
           <ValidatedForm
             formName="Reply to the comment"

@@ -73,7 +73,7 @@ export default function PostId() {
           </Stack>
         </Stack>
       </ContentWrapper>
-      {user.isLoggedIn && (
+      {user.getLoginStatus() && (
         <Box width="100%">
           <ValidatedForm
             formName="Write a comment"

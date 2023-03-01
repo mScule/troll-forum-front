@@ -41,7 +41,7 @@ const ReactionMeter: FC<Props> = ({ to, controls }) => {
       };
 
       reactions.forEach((reaction) => {
-        if (reaction.userId === user.id) {
+        if (reaction.userId === user.getId()) {
           updated.reaction = reaction;
         }
 
@@ -103,7 +103,7 @@ const ReactionMeter: FC<Props> = ({ to, controls }) => {
           <LoadingPill message="Loading" />
         )}
 
-        {user.isLoggedIn && controls && (
+        {user.getLoginStatus() && controls && (
           <ReactionControls
             selected={switchExpression(
               reactionCounter?.reaction?.type,
