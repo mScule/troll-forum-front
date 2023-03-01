@@ -77,7 +77,7 @@ const Sidebar: FC<Props> = ({ open, handleCloseSidebar }) => {
           </ListItem>
         </List>
       </Box>
-      {user.isLoggedIn ? (
+      {user.getLoginStatus() ? (
         <List
           sx={{
             "& > *:first-of-type": { marginTop: 0 },
@@ -93,7 +93,7 @@ const Sidebar: FC<Props> = ({ open, handleCloseSidebar }) => {
             <ListItemButton
               sx={{ gap: "1rem" }}
               onClick={() => {
-                navigate(`/user/${user.id}`);
+                navigate(`/user/${user.getId()}`);
                 handleCloseSidebar();
               }}
             >
@@ -117,9 +117,7 @@ const Sidebar: FC<Props> = ({ open, handleCloseSidebar }) => {
             <ListItemButton
               sx={{ gap: "1rem" }}
               onClick={() => {
-                localStorage.removeItem("authorization");
-                user.setId(0);
-                user.setIsLoggedIn(false);
+                user.logout();
                 handleCloseSidebar();
               }}
             >
