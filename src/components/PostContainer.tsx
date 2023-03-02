@@ -1,11 +1,14 @@
 import React, { useEffect } from "react";
 import axios from "axios";
-import { Box, Typography } from "@mui/material";
+import {Box, Card, Typography} from "@mui/material";
 import Stack from "@mui/material/Stack";
 import Post from "../types/Post";
+import {useNavigate} from "react-router-dom";
 
 const PostContainer = () => {
+
   const [posts, setPost] = React.useState<Post[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchPosts();
@@ -33,16 +36,15 @@ const PostContainer = () => {
     >
       <Stack spacing={3}>
         {posts.map((post) => (
-          <Box
+          <Card
             sx={{
               ...commonStyles,
-              backgroundColor: "#333333",
               minWidth: "550px",
               minHeight: "250px",
             }}
             key={post.id}
           >
-            <Typography style={{ margin: "10px" }} variant="h4">
+            <Typography onClick={() => navigate(`post/${post.id}`)} style={{ margin: "10px" }} variant="h4">
               {post.title}
             </Typography>
             <Typography
@@ -62,7 +64,7 @@ const PostContainer = () => {
             <Typography style={{ marginLeft: "10px", marginTop: "10px" }}>
               {post.body}
             </Typography>
-          </Box>
+          </Card>
         ))}
       </Stack>
     </Box>
