@@ -1,10 +1,16 @@
+import { useEffect } from "react";
 import axios from "../setup/axios";
 import { useContext } from "react";
 import ValidatedForm from "../components/ValidatedForm";
 import { FormSchema } from "../components/ValidatedForm";
 import { NotificationContext } from "../contexts/Notification";
+import { UserContext } from "../contexts/User";
+import { useNavigate } from "react-router-dom";
+import NavigateWithNotification from "../components/NavigateWithNotification";
 
 export default function Register() {
+  const navigate = useNavigate();
+  const user = useContext(UserContext);
   const createNotification = useContext(NotificationContext);
 
   const schema: FormSchema = {
@@ -41,7 +47,13 @@ export default function Register() {
     },
   };
 
-  return (
+  return user.getLoginStatus() === true ? (
+    <NavigateWithNotification
+      to="/"
+      type="info"
+      content="You have already logged in"
+    />
+  ) : (
     <ValidatedForm
       formName="Registeration"
       formSchema={schema}
@@ -54,6 +66,8 @@ export default function Register() {
               password: form.password,
             })
           ).data.user;
+
+          navigate("/login");
 
           createNotification({
             type: "success",
