@@ -2,17 +2,24 @@ import { useContext } from "react";
 import ValidatedForm, { FormSchema } from "../components/ValidatedForm";
 import { UserContext } from "../contexts/User";
 import { useNavigate } from "react-router-dom";
+import NavigateWithNotification from "../components/NavigateWithNotification";
 
 export default function Login() {
-  const user = useContext(UserContext);
   const navigate = useNavigate();
+  const user = useContext(UserContext);
 
   const schema: FormSchema = {
     username: { type: "text" },
     password: { type: "password" },
   };
 
-  return (
+  return user.getLoginStatus() === true ? (
+    <NavigateWithNotification
+      to="/"
+      type="info"
+      content="You have already logged in"
+    />
+  ) : (
     <ValidatedForm
       formName="Login"
       formSchema={schema}

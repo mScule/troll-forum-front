@@ -10,9 +10,13 @@ const Search: FC = () => {
     <TextField
       placeholder="Search"
       variant="outlined"
-      sx={{ width: "100%", maxWidth: "30rem"}}
+      sx={{ width: "100%", maxWidth: "30rem" }}
       size="small"
-      onChange={(event) => event.target.value ? navigate(`/search/${event.target.value}`) : navigate("/")}
+      onChange={(event) =>
+        event.target.value
+          ? navigate(`/search/${event.target.value}`)
+          : navigate("/")
+      }
       InputProps={{
         startAdornment: (
           <Box marginRight={2} display="flex" alignContent="center">

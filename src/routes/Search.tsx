@@ -1,21 +1,12 @@
-import { useContext } from "react";
 import axios from "../setup/axios";
-import {
-  LoaderFunctionArgs,
-  useLoaderData,
-  useRevalidator,
-} from "react-router-dom";
+import { LoaderFunctionArgs, useLoaderData } from "react-router-dom";
 import User from "../types/User";
 import Post from "../types/Post";
 import CommentType from "../types/Comment";
 import ContentWrapper from "../components/ContentWrapper";
 import ContentHeader from "../components/ContentHeader";
-import { Typography, Box, Stack, Divider } from "@mui/material";
-import ReactionMeter from "../components/ReactionMeter";
-import Comment from "../components/Comment";
+import { Typography, Stack } from "@mui/material";
 import { grey } from "@mui/material/colors";
-import ValidatedForm from "../components/ValidatedForm";
-import { UserContext } from "../contexts/User";
 import ContentLink from "../components/ContentLink";
 
 export async function loader(args: LoaderFunctionArgs) {

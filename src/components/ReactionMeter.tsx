@@ -62,7 +62,7 @@ const ReactionMeter: FC<Props> = ({ to, controls }) => {
 
       setReactionCounter(updated);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 

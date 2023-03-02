@@ -229,7 +229,7 @@ const ValidatedForm: FC<Props> = ({
         <Button
           type="submit"
           variant="contained"
-          sx={{ marginTop: 3, marginBottom: 3, width: "fit-content" }}
+          sx={{ width: "fit-content" }}
           disabled={!isFormValidated()}
         >
           {submitLabel}

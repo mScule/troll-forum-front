@@ -1,6 +1,5 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import IconButton from "@mui/material/IconButton";
 import Logo from "./Logo";
@@ -29,10 +28,7 @@ const TopBar: FC<Props> = ({ searchbar, handleMenuButtonClick }) => {
       >
         <Logo />
         {searchbar && <Search />}
-        <IconButton
-          size="small"
-          onClick={handleMenuButtonClick}
-        >
+        <IconButton size="small" onClick={handleMenuButtonClick}>
           <UserIcon />
         </IconButton>
       </Stack>
