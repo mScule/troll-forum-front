@@ -1,9 +1,7 @@
-import { TbMinimize as AppIcon } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
-import { red } from "@mui/material/colors";
 import { Typography, Stack } from "@mui/material";
-
-import { rotateChildren } from "../styles";
+import { ReactComponent as AngerIcon } from "../../public/anger.svg";
+import { Box } from "@mui/system";
 
 export default function Logo() {
   const navigate = useNavigate();
@@ -15,8 +13,10 @@ export default function Logo() {
       onClick={() => navigate("/")}
       sx={{ cursor: "pointer" }}
     >
-      <Stack padding={1} sx={rotateChildren(45)}>
-        <AppIcon size={32} color={red[500]} />
+      <Stack padding={1}>
+        <Box height={24} width={24}>
+          <AngerIcon />
+        </Box>
       </Stack>
       <Typography noWrap variant={"h1"} fontSize={20} fontWeight="bold">
         Trolf
