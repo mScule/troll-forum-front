@@ -9,10 +9,17 @@ interface Props {
   meta?: string;
   children?: ReactNode;
   oneliner?: boolean;
-
+  slim?: boolean;
 }
 
-const ContentLink: FC<Props> = ({ title, meta, to, children, oneliner }) => {
+const ContentLink: FC<Props> = ({
+  title,
+  meta,
+  to,
+  children,
+  oneliner,
+  slim,
+}) => {
   const navigate = useNavigate();
 
   return (
@@ -33,7 +40,9 @@ const ContentLink: FC<Props> = ({ title, meta, to, children, oneliner }) => {
           gap={oneliner ? 1 : 0}
         >
           <Typography variant="h3" fontSize={16}>
-            <b>{title}</b>
+            <b>
+              {slim && title.length > 7 ? title.substring(0, 6) + "..." : title}
+            </b>
           </Typography>
           {meta && <Chip label={meta} />}
         </Stack>
