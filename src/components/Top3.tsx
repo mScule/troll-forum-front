@@ -1,6 +1,11 @@
-import { Divider, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
-import { Stack } from "@mui/system";
+import {
+  Stack,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+} from "@mui/material";
 import { FC, useState, useEffect } from "react";
 import switchExpression from "../expression/switchExpression";
 import axios from "../setup/axios";
@@ -10,7 +15,8 @@ import ContentHeader from "./ContentHeader";
 import ContentLink from "./ContentLink";
 import ContentWrapper from "./ContentWrapper";
 import LoadingPill from "./LoadingPill";
-import ReactionMeter from "./ReactionMeter";
+import Reaction from "./Reaction";
+import { TbChevronDown as ExpandIcon } from "react-icons/all";
 
 interface Props {
   most: "dull" | "spam" | "troll";
@@ -18,8 +24,8 @@ interface Props {
 
 const Top3: FC<Props> = ({ most }) => {
   const [top3, setTop3] = useState<{
-    posts: Post[];
-    comments: Comment[];
+    posts: ({ reactionCount: number } & Post)[];
+    comments: ({ reactionCount: number } & Comment)[];
   } | null>(null);
 
   useEffect(() => {
@@ -31,6 +37,64 @@ const Top3: FC<Props> = ({ most }) => {
       }
     })();
   }, []);
+
+  const places = ["🥇", "🥈", "🥉"];
+
+  const postLinks =
+    top3 && top3.posts.length > 0 ? (
+      top3.posts.map((post, place) => (
+        <ContentLink
+          key={`top3-${most}-${place}-post`}
+          to={`/post/${post.id}`}
+          title={post.title}
+          meta={`Post #${post.id}`}
+        >
+          <Stack
+            direction="row"
+            justifyContent="left"
+            alignItems="center"
+            gap={1}
+          >
+            <Typography fontSize={32}>{places[place]}</Typography>
+            <Reaction type={most} amount={post.reactionCount} />
+          </Stack>
+        </ContentLink>
+      ))
+    ) : (
+      <Typography variant="body1" fontSize={12} color={grey[500]}>
+        No posts
+      </Typography>
+    );
+
+  const commentLinks =
+    top3 && top3.comments.length > 0 ? (
+      top3.comments.map((comment, place) => (
+        <ContentLink
+          key={`top3-${most}-${place}-comment`}
+          to={`/post/${comment.id}`}
+          title={
+            comment.body.length > 25
+              ? comment.body.substring(0, 24) + "..."
+              : comment.body
+          }
+          meta={`Post #${comment.id}`}
+        >
+          <Stack
+            direction="row"
+            justifyContent="left"
+            alignItems="center"
+            gap={1}
+          >
+            <Typography fontSize={32}>{places[place]}</Typography>
+            <Reaction type={most} amount={comment.reactionCount} />
+          </Stack>
+        </ContentLink>
+      ))
+    ) : (
+      <Typography variant="body1" fontSize={12} color={grey[500]}>
+        No comments
+      </Typography>
+    );
 
   return (
     <ContentWrapper>
@@ -48,43 +112,19 @@ const Top3: FC<Props> = ({ most }) => {
       />
       {top3 ? (
         <Stack>
-          <Stack padding={3}>
-            <ContentHeader title="Posts" />
-            {top3.posts.length > 0 ? (
-              top3.posts.map((post) => (
-                <ContentLink
-                  to={`/post/${post.id}`}
-                  title={post.title}
-                  meta={`Post #${post.id}`}
-                >
-                  <ReactionMeter to={`/post/${post.id}/reaction`} />
-                </ContentLink>
-              ))
-            ) : (
-              <Typography variant="body1" fontSize={12} color={grey[500]}>
-                No posts
+          <ContentHeader title="📜 Posts" />
+          <Stack>{postLinks}</Stack>
+
+          <Accordion variant="outlined">
+            <AccordionSummary expandIcon={<ExpandIcon />}>
+              <Typography variant="h3" fontSize={16}>
+                <b>🗯️ Comments</b>
               </Typography>
-            )}
-          </Stack>
-          <Divider />
-          <Stack padding={3}>
-            <ContentHeader title="Comments" />
-            {top3.comments.length > 0 ? (
-              top3.comments.map((comment) => (
-                <ContentLink
-                  to={`/comment/${comment.id}`}
-                  title={comment.body}
-                  meta={`Post #${comment.id}`}
-                >
-                  <ReactionMeter to={`/comment/${comment.id}/reaction`} />
-                </ContentLink>
-              ))
-            ) : (
-              <Typography variant="body1" fontSize={12} color={grey[500]}>
-                No comments
-              </Typography>
-            )}
-          </Stack>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Stack>{commentLinks}</Stack>
+            </AccordionDetails>
+          </Accordion>
         </Stack>
       ) : (
         <LoadingPill message="😴 🥫 🧌..." />
