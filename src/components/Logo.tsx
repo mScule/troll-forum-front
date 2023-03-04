@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Typography, Stack } from "@mui/material";
-import { ReactComponent as AngerIcon } from "../../public/anger.svg";
+import { ReactComponent as AngerIcon } from "../assets/anger.svg";
 import { Box } from "@mui/system";
 
 export default function Logo() {
