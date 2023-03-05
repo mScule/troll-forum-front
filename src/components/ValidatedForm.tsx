@@ -76,7 +76,7 @@ const ValidatedForm: FC<Props> = ({
 
     const finishedForm: Record<string, string> = {};
     for (const [key, field] of Object.entries({ ...form })) {
-      finishedForm[key] = field.value;
+      finishedForm[key] = field.value.trim();
     }
 
     setForm(initForm(formSchema));
@@ -147,6 +147,8 @@ const ValidatedForm: FC<Props> = ({
 
     if (updatedForm[key].value === "") {
       updatedForm[key].validation = "empty";
+    } else if (updatedForm[key].value.replaceAll(" ","") === "") {
+      updatedForm[key].validation = "failure";
     } else if (validator) {
       updatedForm[key].validation = validator(updatedForm[key].value);
     } else if (pendingValidator) {
