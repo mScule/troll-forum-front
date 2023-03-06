@@ -19,6 +19,7 @@ import {
   TbUser as UserIcon,
   TbLogout as LogoutIcon,
   TbPencil as PostIcon,
+  TbLock as PasswordIcon,
 } from "react-icons/tb";
 import Logo from "./Logo";
 import { hide } from "../styles";
@@ -99,6 +100,17 @@ const Sidebar: FC<Props> = ({ open, handleCloseSidebar }) => {
             >
               <UserIcon />
               User page
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton
+                sx={{ gap: "1rem" }}
+                onClick={() => {
+                  navigate(`/password`);
+                  handleCloseSidebar();
+                }}>
+              <PasswordIcon/>
+              Change password
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
