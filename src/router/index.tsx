@@ -11,6 +11,7 @@ import PostId, { loader as postIdLoader } from "../routes/PostId";
 import CommentId, { loader as commentIdLoader } from "../routes/CommentId";
 import PostContainer from "../components/PostContainer";
 import Search, { loader as searchLoader } from "../routes/Search";
+import Password from "../routes/Password";
 
 export default createBrowserRouter([
   {
@@ -79,6 +80,10 @@ export default createBrowserRouter([
         loader: searchLoader,
         element: <Search />,
       },
+      {
+        path: "/password",
+        element: <Password/>
+      }
     ],
   },
 ]);
