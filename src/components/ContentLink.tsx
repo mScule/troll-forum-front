@@ -10,6 +10,7 @@ interface Props {
   children?: ReactNode;
   oneliner?: boolean;
   slim?: boolean;
+  buffer?: boolean;
 }
 
 const ContentLink: FC<Props> = ({
@@ -19,6 +20,7 @@ const ContentLink: FC<Props> = ({
   children,
   oneliner,
   slim,
+  buffer,
 }) => {
   const navigate = useNavigate();
 
@@ -31,7 +33,11 @@ const ContentLink: FC<Props> = ({
       }}
       onClick={() => navigate(to)}
     >
-      <Stack direction={oneliner ? "row" : "column"} gap={oneliner ? 1 : 0}>
+      <Stack
+        direction={oneliner ? "row" : "column"}
+        gap={oneliner ? 1 : 0}
+        justifyContent={buffer ? "space-between" : "left"}
+      >
         <Stack
           direction="row"
           alignContent="left"
@@ -47,14 +53,14 @@ const ContentLink: FC<Props> = ({
           {meta && <Chip label={meta} />}
         </Stack>
         {children && (
-          <>
+          <Stack direction="row" gap={1}>
             <Divider
               sx={{ marginTop: 1, marginBottom: 1 }}
               flexItem
               orientation={oneliner ? "vertical" : "horizontal"}
             />
             {children}
-          </>
+          </Stack>
         )}
       </Stack>
     </Card>
