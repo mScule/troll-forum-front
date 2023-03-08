@@ -66,7 +66,12 @@ export default function PostId() {
           <Divider sx={{ marginBottom: 1, marginTop: 1 }} />
 
           <Stack gap={1}>
-            <Typography variant="h4" fontSize={18} fontWeight="bold">
+            <Typography
+              variant="h4"
+              fontSize={18}
+              fontWeight="bold"
+              marginBottom={1}
+            >
               Comments
             </Typography>
             {commentSection}
