@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import axios from "axios";
-import { Box, Card, Typography } from "@mui/material";
+import { Box, Card, Typography, IconButton } from "@mui/material";
+import { TbExternalLink as LinkIcon } from "react-icons/tb";
 import Stack from "@mui/material/Stack";
 import Post from "../types/Post";
 import { useNavigate } from "react-router-dom";
@@ -43,12 +44,26 @@ const PostContainer = () => {
                 <ContentHeader title={post.title} meta={`#${post.id}`}>
                   {new Date(post.date).toLocaleString("en-GB")}
                 </ContentHeader>
-
                 <Typography
                   style={{ marginLeft: "10px" }}
                   variant="body2"
                   color="text.secondary"
                 ></Typography>
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  justifyContent="right"
+                  gap={1}
+                >
+                  <Typography>Visit post</Typography>
+                  <IconButton
+                    size="small"
+                    sx={{ width: "fit-content" }}
+                    onClick={() => navigate(`/post/${post.id}`)}
+                  >
+                    <LinkIcon />
+                  </IconButton>
+                </Stack>
                 <Typography style={{ marginLeft: "10px", marginTop: "10px" }}>
                   {post.body}
                 </Typography>

@@ -44,6 +44,8 @@ const Top3: FC<Props> = ({ most }) => {
     top3 && top3.posts.length > 0 ? (
       top3.posts.map((post, place) => (
         <ContentLink
+          oneliner
+          buffer
           key={`top3-${most}-${place}-post`}
           to={`/post/${post.id}`}
           title={post.title}
@@ -70,6 +72,8 @@ const Top3: FC<Props> = ({ most }) => {
     top3 && top3.comments.length > 0 ? (
       top3.comments.map((comment, place) => (
         <ContentLink
+          oneliner
+          buffer
           key={`top3-${most}-${place}-comment`}
           to={`/post/${comment.id}`}
           title={
@@ -111,20 +115,16 @@ const Top3: FC<Props> = ({ most }) => {
         }
       />
       {top3 ? (
-        <Stack>
-          <ContentHeader title="📜 Posts" />
+        <Stack gap={1}>
+          <Typography variant="h3" fontSize={22} marginBottom={1}>
+            <b>📜 Posts</b>
+          </Typography>
           <Stack>{postLinks}</Stack>
 
-          <Accordion variant="outlined">
-            <AccordionSummary expandIcon={<ExpandIcon />}>
-              <Typography variant="h3" fontSize={16}>
-                <b>🗯️ Comments</b>
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Stack>{commentLinks}</Stack>
-            </AccordionDetails>
-          </Accordion>
+          <Typography variant="h3" fontSize={22} marginBottom={1}>
+            <b>🗯️ Comment</b>
+          </Typography>
+          <Stack>{commentLinks}</Stack>
         </Stack>
       ) : (
         <LoadingPill message="😴 🥫 🧌..." />

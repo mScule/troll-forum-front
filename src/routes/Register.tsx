@@ -22,7 +22,6 @@ export default function Register() {
           return "failure";
         }
 
-        await new Promise((resolve) => setTimeout(resolve, 2000));
         const search = await axios.get("search", { params: { value } });
         const users = search.data.users;
 
