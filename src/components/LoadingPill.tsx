@@ -6,6 +6,13 @@ interface Props {
   message: string;
 }
 
+/**
+ * Spinner for showing pending status.
+ *
+ * Attributes:
+ *
+ * **message** Message to be shown next to the spinner.
+ */
 const LoadingPill: FC<Props> = ({ message }) => (
   <Card
     variant="outlined"

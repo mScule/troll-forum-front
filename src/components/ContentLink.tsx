@@ -13,6 +13,18 @@ interface Props {
   buffer?: boolean;
 }
 
+/**
+ * Link to some content.
+ *
+ * Attributes:
+ * 
+ * **to**       Url to the content.\
+ * **title**    The title that the link will have.\
+ * **meta**     Some meta info about the content. (optional)\
+ * **oneliner** Makes the link appear smaller by jamming everything in one line. (optional)\
+ * **slim**     Makes title smaller by limiting it to 7 characters long. (optional)\
+ * **buffer**   Spaces links content evenly when it's a oneliner. (optional)
+ */
 const ContentLink: FC<Props> = ({
   title,
   meta,

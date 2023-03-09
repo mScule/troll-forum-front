@@ -6,6 +6,13 @@ interface Props {
   children: React.ReactNode;
 }
 
+/**
+ * Wrapper for any type of content.
+ *
+ * Attributes:
+ * 
+ * **fitContent** Makes the wrapper only as wide as its content. (optional)
+ */
 const ContentWrapper: FC<Props> = ({ fitContent, children }) => (
   <Box
     sx={{

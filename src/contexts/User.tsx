@@ -3,6 +3,10 @@ import { useEffect, createContext, useState, ReactNode, FC } from "react";
 import axios from "../setup/axios";
 import jwtDecode from "jwt-decode";
 
+/**
+ * Context for providing the user state.
+ */
+
 function notInitialized() {
   throw new Error("UserContext not initialized yet");
 }

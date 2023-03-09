@@ -55,6 +55,55 @@ const multilineFieldProps = (rows: number) => ({
   rows,
 });
 
+/**
+ * Component for making validated forms less boilerplatish.
+ * 
+ * How to use:
+ * 
+ * To use this, you'll create schema instead of defining every input
+ * component that the form consists of.
+ *
+ * The schema is an object that contains keys that points to input field
+ * definitions. Objects that defined the input fields.
+ *
+ * Simple schema example:
+ * ```js
+ * const simpleSchema = {
+ *    username: {type: "text"},
+ *    password: {type: "password"}
+ * }
+ * ```
+ *
+ * Complex schema example with validation:
+ * ```js
+ * const complexSchema = {
+ *    title: {
+ *      type: "text",
+ *      validatePending: async value =>
+ *        (await imaginaryApi.postExistsWithTitle(value))
+ *          ? "success"
+ *          : "failure"
+ *    },
+ *    body: {
+ *      type: "text",
+ *      validate: value => value.length < 256 ? "success" : "failure"
+ *    }
+ * }
+ * ```
+ * Attributes:
+ *
+ * **formName** Name of the form.\
+ * **formSchema** Schema that the form is based of.\
+ * **handleSubmit** Function that handles the submit. Parameter is the filled
+ *                  form with every field sanitized.\
+ * **submitLabel** Label for the submit button.\
+ * **submitInfo** Info text that will be shown above the submit button. (optional)\
+ * **submitWarning** Warning text that will be shown above the submit button. (optional)\
+ * **successMessage** Message that will be shown on success. Can be string or a function
+ *                    containing the filled form as parameter so that the values can be
+ *                    used in the message. The function return the message.\
+ * **failureMessage** Same case as with the successMessage but for failure message.
+ */
 const ValidatedForm: FC<Props> = ({
   formName,
   formSchema,

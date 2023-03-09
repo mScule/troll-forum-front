@@ -13,6 +13,17 @@ interface Props {
   parent?: CommentType;
 }
 
+/**
+ * Component that shows comment and it's possible replies that it then loads
+ * recursively.
+ * 
+ * Attributes:
+ *
+ * **comment** Comment to be shown.\
+ * **parent**  Comment that this comment is reply to. (optional) \
+ *             *Used for determining wether to call the comment reply or*
+ *             *comment*
+ */
 const Comment: FC<Props> = ({ comment, parent }) => {
   const navigate = useNavigate();
 

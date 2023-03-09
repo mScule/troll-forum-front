@@ -5,6 +5,9 @@ interface Props {
   children: React.ReactNode;
 }
 
+/**
+ * Wrapper for any type of forms.
+ */
 const FormWrapper: FC<Props> = ({ children }) => (
   <Box
     sx={{

@@ -1,6 +1,10 @@
 import { useState, createContext, FC, useRef, ReactNode } from "react";
 import { Alert, Drawer } from "@mui/material";
 
+/**
+ * Context for providing notification creator.
+ */
+
 export const NotificationContext = createContext(
   (_notification: Notification) => {}
 );

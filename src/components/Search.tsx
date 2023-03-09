@@ -3,6 +3,12 @@ import { TextField, Box } from "@mui/material";
 import { TbSearch as SearchIcon } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * For searching content.
+ * Uses react router hard handedly by sending queries to API route `/search/`
+ *
+ * **API V1 Compatible**
+ */
 const Search: FC = () => {
   const navigate = useNavigate();
 

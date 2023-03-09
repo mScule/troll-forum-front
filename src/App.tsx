@@ -4,6 +4,10 @@ import { UserProvider } from "./contexts/User";
 import { ThemeProvider } from "@mui/material";
 import { NotificationProvider } from "./contexts/Notification";
 
+/**
+ * The component containing all of the providers.
+ */
+
 import router from "./router";
 import CssBaseline from "@mui/material/CssBaseline";
 

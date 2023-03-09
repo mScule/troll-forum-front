@@ -1,5 +1,8 @@
 import axios from "axios"
-
+/**
+ * Axios setup that fetches the authorization token automatically, and
+ * Calls the API URL stated in .env files
+ */
 function createInstance() {
     const instance = axios.create({
         baseURL: import.meta.env.VITE_API_URL,

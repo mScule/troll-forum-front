@@ -9,6 +9,10 @@ import { Typography, Stack } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import ContentLink from "../components/ContentLink";
 
+/**
+ * Component that shows the search results made with searchbar.
+ */
+
 export async function loader(args: LoaderFunctionArgs) {
   const { searchValue } = args.params;
   const { users, posts, comments } = (

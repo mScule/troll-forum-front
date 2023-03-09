@@ -17,6 +17,11 @@ import { grey } from "@mui/material/colors";
 import ValidatedForm from "../components/ValidatedForm";
 import { UserContext } from "../contexts/User";
 
+/**
+ * Component for showing comments at dynamic /:comment-id path.
+ */
+
+
 export async function loader(args: LoaderFunctionArgs) {
   const { commentId } = args.params;
   const comment = (await axios.get(`comment/${commentId}`)).data

@@ -23,6 +23,18 @@ interface Props {
   reactions: ReactionType[];
 }
 
+/**
+ * Component showing everything user has ever done in the platform 😈
+ *
+ * Attributes:
+ *
+ * **visitable** Link to the userpage? Some possibly dead feature. (optional)\
+ * **username** Username.\
+ * **id** User id.\
+ * **posts** Posts by the user.\
+ * **comments** Comments by the user.\
+ * **reactions** Reactions by the user.
+ */
 const UserProfile: FC<Props> = ({
   visitable,
   username,

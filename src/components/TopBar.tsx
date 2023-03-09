@@ -13,6 +13,13 @@ interface Props {
   handleMenuButtonClick: () => void;
 }
 
+/**
+ * Topbar component containing the Logo, Searchbar and Menubutton.
+ *
+ * Attributes:
+ *
+ * **searchbar** Wether to show the searchbar or not. (optional)
+ */
 const TopBar: FC<Props> = ({ searchbar, handleMenuButtonClick }) => {
   return (
     <AppBar position="sticky">

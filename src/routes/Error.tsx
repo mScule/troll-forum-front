@@ -4,6 +4,10 @@ import { Stack } from "@mui/system";
 import { Typography } from "@mui/material";
 import ContentWrapper from "../components/ContentWrapper";
 
+/**
+ * Generic but partly configurable Error message "page" component.
+ */
+
 interface Props {
   title: string;
   message: string;

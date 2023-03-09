@@ -3,6 +3,9 @@ import { Typography, Stack } from "@mui/material";
 import { ReactComponent as AngerIcon } from "../assets/anger.svg";
 import { Box } from "@mui/system";
 
+/**
+ * Trolf logo. Works also as link to the feed.
+ */
 export default function Logo() {
   const navigate = useNavigate();
 

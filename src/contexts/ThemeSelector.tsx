@@ -4,6 +4,10 @@ import dark from "../themes/dark";
 import light from "../themes/light";
 import { Theme } from "@mui/material";
 
+/**
+ * Context for providing the selected theme.
+ */
+
 type ThemeOption = "light" | "dark";
 
 const getTheme = (option: ThemeOption) => (option === "light" ? light : dark);

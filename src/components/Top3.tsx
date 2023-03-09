@@ -1,11 +1,6 @@
 import { Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
-import {
-  Stack,
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-} from "@mui/material";
+import { Stack } from "@mui/material";
 import { FC, useState, useEffect } from "react";
 import switchExpression from "../expression/switchExpression";
 import axios from "../setup/axios";
@@ -16,12 +11,21 @@ import ContentLink from "./ContentLink";
 import ContentWrapper from "./ContentWrapper";
 import LoadingPill from "./LoadingPill";
 import Reaction from "./Reaction";
-import { TbChevronDown as ExpandIcon } from "react-icons/all";
 
 interface Props {
   most: "dull" | "spam" | "troll";
 }
 
+/**
+ * Shows three most of something posts and comments.
+ * Component for rewarding the most famous content in a way.
+ * 
+ * **API V1 Compatible**
+ *
+ * Attributes:
+ *
+ * **most** What to search for.
+ */
 const Top3: FC<Props> = ({ most }) => {
   const [top3, setTop3] = useState<{
     posts: ({ reactionCount: number } & Post)[];
@@ -122,7 +126,7 @@ const Top3: FC<Props> = ({ most }) => {
           <Stack>{postLinks}</Stack>
 
           <Typography variant="h3" fontSize={22} marginBottom={1}>
-            <b>🗯️ Comment</b>
+            <b>🗯️ Comments</b>
           </Typography>
           <Stack>{commentLinks}</Stack>
         </Stack>

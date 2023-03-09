@@ -13,6 +13,9 @@ import PostContainer from "../components/PostContainer";
 import Search, { loader as searchLoader } from "../routes/Search";
 import Password from "../routes/Password";
 
+/**
+ * The router for the front end.
+ */
 export default createBrowserRouter([
   {
     path: "/",
