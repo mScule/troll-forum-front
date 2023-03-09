@@ -4,6 +4,15 @@ import ValidatedForm, {FormSchema} from "../components/ValidatedForm";
 import axios from "../setup/axios";
 import NavigateWithNotification from "../components/NavigateWithNotification";
 
+/*
+Form made with schema from /components/ValidatedForm.tsx
+
+Allows users to change their password. The user must be logged-in to perform this action.
+The new password must be 12 characters or longer.
+User is informed if the password change was successful or not.
+
+ */
+
 export default function Password() {
     const user = useContext(UserContext)
 

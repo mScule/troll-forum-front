@@ -9,6 +9,12 @@ import ContentWrapper from "./ContentWrapper";
 import ContentHeader from "./ContentHeader";
 import Top3 from "./Top3";
 
+/*
+PostContainer fetches posts from database and displays them on the "front-page".
+The fetchPosts() fetches the posts from the database with axios. The posts are then used by React.useState.
+useEffect calls the fetchPosts() whenever this class is called.
+ */
+
 const PostContainer = () => {
   const [posts, setPost] = React.useState<Post[]>([]);
   const navigate = useNavigate();
@@ -24,7 +30,7 @@ const PostContainer = () => {
         setPost(res.data.posts);
       })
       .catch((err) => {
-        console.log("Error with posts:" + err);
+        console.log("Error with posts: " + err);
       });
   };
 

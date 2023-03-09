@@ -2,8 +2,15 @@ import { useContext } from "react";
 import ValidatedForm, { FormSchema } from "../components/ValidatedForm";
 import axios from "../setup/axios";
 import { UserContext } from "../contexts/User";
-import { Navigate } from "react-router-dom";
 import NavigateWithNotification from "../components/NavigateWithNotification";
+
+/*
+Form made with schema from /components/ValidatedForm.tsx
+
+Allows users to make new posts. The user must be logged-in to perform this action.
+User is informed if the posting was successful or not.
+
+ */
 
 export default function Post() {
   const user = useContext(UserContext);

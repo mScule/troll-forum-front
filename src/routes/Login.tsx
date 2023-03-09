@@ -4,6 +4,13 @@ import { UserContext } from "../contexts/User";
 import { useNavigate } from "react-router-dom";
 import NavigateWithNotification from "../components/NavigateWithNotification";
 
+/*
+Form made with schema from /components/ValidatedForm.tsx
+
+Allows users to log users in.
+The form informs the user if they managed to log in or not.
+ */
+
 export default function Login() {
   const navigate = useNavigate();
   const user = useContext(UserContext);

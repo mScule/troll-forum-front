@@ -8,6 +8,20 @@ import { UserContext } from "../contexts/User";
 import { useNavigate } from "react-router-dom";
 import NavigateWithNotification from "../components/NavigateWithNotification";
 
+/*
+Form made with schema from /components/ValidatedForm.tsx
+Allows users to register an account.
+
+When the user gives the credentials, values are checked for validity.
+
+The username is checked for length and if it can already be found in the database.
+The password must be 12 characters or longer.
+
+User is informed if registration was successful or not.
+If registration was successful, user is navigated automatically to the login page.
+
+ */
+
 export default function Register() {
   const navigate = useNavigate();
   const user = useContext(UserContext);
@@ -17,6 +31,7 @@ export default function Register() {
     username: {
       type: "text",
       rows: 1,
+
       validatePending: async (value: string) => {
         if (value.length < 3) {
           return "failure";
@@ -30,7 +45,6 @@ export default function Register() {
             return "failure";
           }
         }
-
         return "success";
       },
       errorText: (value) =>
