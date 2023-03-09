@@ -9,6 +9,9 @@ interface Props {
   children: ReactNode;
 }
 
+/**
+ * "The core of the whole SPA". Contains the Topbar, and Sidebar.
+ */
 const PageWrapper: FC<Props> = ({ searchbar, children }) => {
   const [showSideBar, setShowSideBar] = useState(false);
 

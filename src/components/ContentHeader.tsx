@@ -7,6 +7,14 @@ interface Props {
   children?: ReactNode;
 }
 
+/**
+ * Header for any type of content that should have a heading.
+ *
+ * Attributes:
+ * 
+ * **title** The title that the header will have.\
+ * **meta**  Some meta info about the content. (optional)
+ */
 const ContentHeader: FC<Props> = ({ title, meta, children }) => (
   <Stack direction="column" gap={2} marginBottom={1.5}>
     <Stack

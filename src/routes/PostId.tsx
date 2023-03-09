@@ -17,6 +17,10 @@ import { grey } from "@mui/material/colors";
 import ValidatedForm from "../components/ValidatedForm";
 import { UserContext } from "../contexts/User";
 
+/**
+ * Component for showing posts at dynamic /:post-id path.
+ */
+
 export async function loader(args: LoaderFunctionArgs) {
   const { postId } = args.params;
   const post = (await axios.get(`post/${postId}`)).data.post as Post;

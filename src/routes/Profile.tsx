@@ -6,6 +6,10 @@ import Post from "../types/Post";
 import Reaction from "../types/Reaction";
 import Comment from "../types/Comment";
 
+/**
+ * Component for showing users at dynamic /:user-id path.
+ */
+
 export async function loader(args: LoaderFunctionArgs) {
   const { userId } = args.params;
 

@@ -23,6 +23,18 @@ interface Props {
   controls?: boolean;
 }
 
+/**
+ * Shows multiple types of reactions in one meter.
+ * 
+ * **API V1 Compatible**
+ *
+ * Attributes:
+ *
+ * **to** The path where the status for the reactions are being fetched.
+ *        Example: `post/1/reaction`\
+ *
+ * **controls** Wether to show the reaction controls or not.
+ */
 const ReactionMeter: FC<Props> = ({ to, controls }) => {
   const [reactionCounter, setReactionCounter] =
     useState<null | ReactionMeterState>(null);

@@ -15,6 +15,15 @@ interface Props {
   pending?: boolean;
 }
 
+/**
+ * Controls for the user to react to something.
+ *
+ * Attributes:
+ *
+ * **handleClick** Handler for the controller click.\
+ * **selected**    Shows the selected reaction. (optional)\
+ * **pending**     Shows the controls in pending mode. (optional)
+ */
 const ReactionControls: FC<Props> = ({ handleClick, selected, pending }) => {
   const dullIcon = "😴";
   const spamIcon = "🥫";

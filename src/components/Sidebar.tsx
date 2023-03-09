@@ -33,6 +33,9 @@ interface Props {
   handleCloseSidebar: () => void;
 }
 
+/**
+ * Sidebar component.
+ */
 const Sidebar: FC<Props> = ({ open, handleCloseSidebar }) => {
   const navigate = useNavigate();
 

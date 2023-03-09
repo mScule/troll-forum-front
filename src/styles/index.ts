@@ -1,5 +1,9 @@
 import { SxProps } from "@mui/material";
 
+/**
+ * Style utilities.
+ */
+
 export const hide: Record<string, SxProps> = {
     mobile: {
         display: ["none", "block"]

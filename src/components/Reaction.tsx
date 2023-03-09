@@ -18,6 +18,7 @@ interface ReactionIcon {
   y?: number;
   x?: number;
 }
+
 const reactionIcon = (icon: ReactionIcon): SxProps => ({
   overflow: "hidden",
   width: "2.5rem",
@@ -40,6 +41,15 @@ interface Props {
   selected?: boolean;
 }
 
+/**
+ * Component for reaction.
+ *
+ * Attributes:
+ *
+ * **type**   Type of the reaction.\
+ * **amount** Shows how many of these reactions are there (Counter). (optional)\
+ * **selected** Shows thumb to show that the reaction is selected by the user (Not in use). (optional)
+ */
 const Reaction: FC<Props> = ({ type, amount, selected }) => (
   <Tooltip title={`Reaction: ${type}`}>
     <Card variant="outlined" sx={{ width: "min-content" }}>
